@@ -1019,5 +1019,72 @@ document.addEventListener('DOMContentLoaded',setup);
  document.addEventListener('DOMContentLoaded',()=>{setup('daily');setup('weekly');});
 })();
 </script>
+
+<script>
+(function(){
+const DAILY=[
+{id:'D01',name:'Inspección visual general',desc:'Verificar condición general y detectar anomalías visibles.'},
+{id:'D02',name:'Prensabotellas',desc:'Revisar condición, desgaste, fijación y señales de deterioro.'},
+{id:'D03',name:'Guías y elementos de transporte',desc:'Verificar desgaste, fijación, alineación y condición.'},
+{id:'D04',name:'Sensores y elementos eléctricos',desc:'Verificar limpieza, fijación, cableado y condición.'},
+{id:'D05',name:'Neumática',desc:'Verificar conexiones, fugas y condición de actuadores/válvulas.'}];
+const WEEKLY=[
+{id:'S01',name:'Transmisiones y componentes mecánicos',desc:'Revisión detallada de desgaste, fijación y condición.'},
+{id:'S02',name:'Elementos eléctricos',desc:'Revisión de conexiones, sensores, motores y componentes.'},
+{id:'S03',name:'Elementos neumáticos',desc:'Revisión detallada de conexiones, actuadores y válvulas.'},
+{id:'S04',name:'Estructura y componentes de encajonado',desc:'Verificar desgaste, alineación y fijaciones.'},
+{id:'S05',name:'Puntos de inspección complementarios',desc:'Registrar cualquier condición encontrada durante la inspección.'}];
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function build(id,items,source){
+ const el=document.getElementById(id); if(!el)return;
+ el.innerHTML=items.map(p=>`<div class="row n3-point">
+ <div><div class="num">${p.id}</div><div class="name">${esc(p.name)}</div><div class="desc">${esc(p.desc)}</div></div>
+ <div class="actions">
+ <button class="btn check" onclick="n3Normal(this,'${source}','${p.id}')">✓</button>
+ <button class="btn" onclick="n3Finding('${source}','${p.id}')">Registrar hallazgo</button>
+ </div></div>`).join('');
+}
+window.n3Normal=async function(btn,source,point){
+ btn.classList.add('done');btn.textContent='✓ Registrado';
+ await n3Persist(source,point,{condition:'normal',maintenance_required:false});
+};
+window.n3Finding=function(source,point){
+ const old=document.getElementById('n3FindingModal');if(old)old.remove();
+ const m=document.createElement('div');m.id='n3FindingModal';m.className='pressModal';
+ m.innerHTML=`<div class="pressModalBox"><div class="pressModalHead"><h3>Registrar hallazgo · ${point}</h3><button class="pressClose" onclick="this.closest('.pressModal').remove()">×</button></div>
+ <div class="pressForm"><label>Condición / falla<input id="n3reason"></label>
+ <label>Severidad<select id="n3severity"><option value="low">Baja</option><option value="medium">Media</option><option value="high">Alta</option></select></label>
+ <label class="full">Observación<textarea id="n3obs"></textarea></label>
+ <label class="full">Acción / seguimiento<textarea id="n3action"></textarea></label></div>
+ <div class="pressModalActions"><button class="btn" onclick="this.closest('.pressModal').remove()">Cancelar</button><button class="btn primary" onclick="n3SaveFinding('${source}','${point}')">Guardar hallazgo</button></div></div>`;
+ document.body.appendChild(m);
+};
+window.n3SaveFinding=async function(source,point){
+ await n3Persist(source,point,{condition:'finding',finding_reason:document.getElementById('n3reason').value,severity:document.getElementById('n3severity').value,observation:document.getElementById('n3obs').value,action:document.getElementById('n3action').value,maintenance_required:true});
+ document.getElementById('n3FindingModal')?.remove();
+};
+async function n3Persist(source,point,extra){
+ const prefix=source==='daily'?'n3Daily':'n3Weekly';
+ const payload={source,point,...extra,inspection_date:document.getElementById(prefix+'Date')?.value||new Date().toISOString().slice(0,10),head:+(document.getElementById(prefix+'Head')?.value||1),row_no:+(document.getElementById(prefix+'Row')?.value||1),column_no:1};
+ if(window.L3_SAVE_INSPECTION){try{await window.L3_SAVE_INSPECTION(payload);return;}catch(e){console.error(e);}}
+ const key='l3_n3_inspections';const a=JSON.parse(localStorage.getItem(key)||'[]');a.unshift({...payload,id:Date.now()});localStorage.setItem(key,JSON.stringify(a));
+}
+function controls(prefix){
+ return `<div class="n3Controls" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
+ <label style="font-size:11px;color:#8798ad">Fecha<input id="${prefix}Date" type="date" value="${new Date().toISOString().slice(0,10)}"></label>
+ <label style="font-size:11px;color:#8798ad">Cabezal<select id="${prefix}Head">${[1,2,3,4,5,6,7,8,9].map(n=>`<option value="${n}">Cabezal ${n}</option>`).join('')}</select></label>
+ <label style="font-size:11px;color:#8798ad">Fila<select id="${prefix}Row">${Array.from({length:24},(_,i)=>`<option value="${i+1}">Fila ${i+1}</option>`).join('')}</select></label></div>`;
+}
+function init(){
+ build('dailyRoutineGrid',DAILY,'daily');build('weeklyRoutineGrid',WEEKLY,'weekly');
+ const d=document.getElementById('dailyRoutineGrid'),w=document.getElementById('weeklyRoutineGrid');
+ if(d)d.insertAdjacentHTML('beforebegin',controls('n3Daily'));
+ if(w)w.insertAdjacentHTML('beforebegin',controls('n3Weekly'));
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+
 </body>
 </html>
