@@ -161,6 +161,43 @@ footer{color:var(--muted);font-size:11px;text-align:center;padding:28px}
  </div>
 </div>
 </section>
+<style>
+.routineGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.routineCard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:15px}.routineHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.routineId{font:11px monospace;color:var(--amber)}.routineName{font-weight:800;margin-top:4px}.routineMeta{color:var(--muted);font-size:11px;margin-top:4px}.routineActions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.routineActions button{flex:1;min-width:120px}.routineFinding{display:none;margin-top:10px;padding:11px;background:var(--yellowbg);border:1px solid #735d1d;border-radius:9px}.routineFinding.open{display:block}.routineFindingGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.routineToolbar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.routineToolbar label{font-size:11px;color:var(--muted)}.routineToolbar input,.routineToolbar select{margin-top:5px}.routineSave{margin-top:14px}.routineFeedback{margin-top:10px;color:var(--green);font-size:12px;min-height:18px}.routineSummary{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.routineSummary .badge{cursor:default}@media(max-width:700px){.routineGrid{grid-template-columns:1fr}.routineToolbar{grid-template-columns:1fr 1fr}.routineFindingGrid{grid-template-columns:1fr}}@media(max-width:480px){.routineToolbar{grid-template-columns:1fr}}
+</style>
+<section id="daily" class="view">
+<div class="section">
+ <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+  <div><h2>N3 Diario</h2><p>Registro de inspección por punto, sin usar estados "OK / No OK".</p></div>
+  <span class="badge bgreen">N3 DIARIO</span>
+ </div>
+ <div class="routineToolbar">
+  <label>Fecha<input id="dailyDate" type="date"></label>
+  <label>Cabezal<select id="dailyHead"></select></label>
+  <label>Fila<select id="dailyRow"></select></label>
+  <label>Columna<select id="dailyCol"><option value="A">A</option><option value="B">B</option><option value="C">C</option></select></label>
+ </div>
+ <div class="routineSummary"><span class="badge bgreen">Condición normal</span><span class="badge byellow">Hallazgo requiere detalle</span></div>
+ <div class="routineGrid" id="dailyRoutineGrid"></div>
+ <div class="routineFeedback" id="dailyFeedback"></div>
+</div>
+</section>
+<section id="weekly" class="view">
+<div class="section">
+ <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
+  <div><h2>N3 Semanal</h2><p>Registro de inspección por punto, sin usar estados "OK / No OK".</p></div>
+  <span class="badge bgreen">N3 SEMANAL</span>
+ </div>
+ <div class="routineToolbar">
+  <label>Fecha<input id="weeklyDate" type="date"></label>
+  <label>Cabezal<select id="weeklyHead"></select></label>
+  <label>Fila<select id="weeklyRow"></select></label>
+  <label>Columna<select id="weeklyCol"><option value="A">A</option><option value="B">B</option><option value="C">C</option></select></label>
+ </div>
+ <div class="routineSummary"><span class="badge bgreen">Condición normal</span><span class="badge byellow">Hallazgo requiere detalle</span></div>
+ <div class="routineGrid" id="weeklyRoutineGrid"></div>
+ <div class="routineFeedback" id="weeklyFeedback"></div>
+</div>
+</section>
 <section id="press" class="view">
 <style>
 #press .press-overview{display:block}
@@ -935,5 +972,52 @@ document.addEventListener('DOMContentLoaded',setup);
 })();
 </script>
 
+<script>
+(function(){
+ const CATALOG={
+  daily:[{id:'D01',name:'Prensabotella',component:'Prensabotella'},{id:'D02',name:'Guía',component:'Guía'},{id:'D03',name:'Cadena',component:'Cadena'},{id:'D04',name:'Transportador',component:'Transportador'},{id:'D05',name:'Encajonado',component:'Encajonado'}],
+  weekly:[{id:'S01',name:'Prensabotella',component:'Prensabotella'},{id:'S02',name:'Guía',component:'Guía'},{id:'S03',name:'Cadena',component:'Cadena'},{id:'S04',name:'Transportador',component:'Transportador'},{id:'S05',name:'Encajonado',component:'Encajonado'}]
+ };
+ const today=()=>new Date().toISOString().slice(0,10);
+ function esc(v){return String(v??'').replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));}
+ function setup(source){
+  const h=document.getElementById(source+'Head'),r=document.getElementById(source+'Row'),d=document.getElementById(source+'Date'),g=document.getElementById(source+'RoutineGrid');
+  if(!h||!g)return;
+  h.innerHTML=Array.from({length:9},(_,i)=>`<option value="${i+1}">Cabezal ${i+1}</option>`).join('');
+  r.innerHTML=Array.from({length:8},(_,i)=>`<option value="${8-i}">Fila ${8-i}</option>`).join('');
+  d.value=today();
+  g.innerHTML=CATALOG[source].map((x,i)=>`<article class="routineCard" data-point="${esc(x.id)}">
+    <div class="routineHead"><div><div class="routineId">${esc(x.id)}</div><div class="routineName">${esc(x.name)}</div><div class="routineMeta">${esc(x.component)}</div></div><span class="badge" id="${source}Badge${i}">Pendiente</span></div>
+    <div class="routineActions"><button class="btn" onclick="routineNormal('${source}',${i})">Condición normal</button><button class="btn" onclick="routineFinding('${source}',${i})">Registrar hallazgo</button></div>
+    <div class="routineFinding" id="${source}Finding${i}"><div class="routineFindingGrid"><label style="font-size:11px;color:var(--muted)">Motivo<select id="${source}Reason${i}"><option value="Desgaste">Desgaste</option><option value="Daño">Daño</option><option value="Desajuste">Desajuste</option><option value="Fuga">Fuga</option><option value="Suciedad">Suciedad</option><option value="Ruido/vibración">Ruido/vibración</option><option value="Otro">Otro</option></select></label><label style="font-size:11px;color:var(--muted)">Severidad<select id="${source}Severity${i}"><option value="low">Baja</option><option value="medium">Media</option><option value="high">Alta</option></select></label><label style="font-size:11px;color:var(--muted)">Acción<input id="${source}Action${i}" placeholder="Seguimiento / mantenimiento"></label><label style="font-size:11px;color:var(--muted)">Observación<input id="${source}Obs${i}" placeholder="Describe la condición"></label></div><button class="btn routineSave" onclick="saveRoutineFinding('${source}',${i})">Guardar hallazgo</button></div>
+  </article>`).join('');
+ }
+ function point(source,i){return CATALOG[source][i]}
+ window.routineNormal=function(source,i){
+  const x=point(source,i), head=+document.getElementById(source+'Head').value,row=+document.getElementById(source+'Row').value,col=+document.getElementById(source+'Col').value;
+  const payload={inspection_date:document.getElementById(source+'Date').value||today(),source,head,row_no:row,column_no:col,point:x.name,component_group:window.groupOf?window.groupOf({point:x.name,component:x.component}):'mechanical',condition:'normal',finding_reason:null,severity:null,observation:null,action:null,maintenance_required:false};
+  persist(source,i,payload,'Condición normal registrada');
+ };
+ window.routineFinding=function(source,i){document.getElementById(source+'Finding'+i).classList.add('open');document.getElementById(source+'Badge'+i).textContent='Requiere detalle';document.getElementById(source+'Badge'+i).className='badge byellow'};
+ window.saveRoutineFinding=function(source,i){
+  const x=point(source,i),head=+document.getElementById(source+'Head').value,row=+document.getElementById(source+'Row').value,col=+document.getElementById(source+'Col').value;
+  const sev=document.getElementById(source+'Severity'+i).value;
+  const payload={inspection_date:document.getElementById(source+'Date').value||today(),source,head,row_no:row,column_no:col,point:x.name,component_group:window.groupOf?window.groupOf({point:x.name,component:x.component}):'mechanical',condition:'finding',finding_reason:document.getElementById(source+'Reason'+i).value,severity:sev,observation:document.getElementById(source+'Obs'+i).value.trim(),action:document.getElementById(source+'Action'+i).value.trim(),maintenance_required:true};
+  persist(source,i,payload,'Hallazgo registrado');
+ };
+ async function persist(source,i,payload,msg){
+  const feedback=document.getElementById(source+'Feedback');
+  try{
+   if(window.L3_SAVE_INSPECTION){await window.L3_SAVE_INSPECTION(payload);}
+   else {const k='l3_n3_inspections';const arr=JSON.parse(localStorage.getItem(k)||'[]');arr.push({...payload,id:'N3-'+Date.now(),date:payload.inspection_date,row:payload.row_no,column:payload.column_no,status:payload.condition});localStorage.setItem(k,JSON.stringify(arr));}
+   const b=document.getElementById(source+'Badge'+i);b.textContent=payload.condition==='finding'?'Hallazgo registrado':'Registrado';b.className='badge '+(payload.condition==='finding'?'byellow':'bgreen');
+   feedback.textContent=msg+' · '+payload.point+' · C'+payload.head+'-F'+payload.row_no+'-'+payload.column_no;
+   if(window.render)window.render();
+   if(window.anaRefresh)window.anaRefresh();
+  }catch(e){feedback.textContent='No se pudo guardar: '+(e.message||e);feedback.style.color='var(--red)';}
+ }
+ document.addEventListener('DOMContentLoaded',()=>{setup('daily');setup('weekly');});
+})();
+</script>
 </body>
 </html>
