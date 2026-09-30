@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ATO Envasado</title>
+<title>Confiabilidad L3 — N3 Diario + Semanal</title>
 <style>
 :root{
  --bg:#0e141d;--panel:#161f2c;--panel2:#1c2735;--border:#2a3a4f;--soft:#22303f;
@@ -82,11 +82,6 @@ footer{color:var(--muted);font-size:11px;text-align:center;padding:28px}
 }
 
 </style>
-
-<style>
-#liveStatus{white-space:nowrap}
-.live-sync-note{font:10px 'JetBrains Mono',monospace;color:#91a0b3}
-</style>
 </head>
 <body>
 <header>
@@ -102,100 +97,118 @@ footer{color:var(--muted);font-size:11px;text-align:center;padding:28px}
 
 <main>
 <section id="analysis" class="view active">
-<style>
-#analysis .ux{font-family:inherit}
-#analysis .topbar{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
-#analysis .filters{display:flex;gap:7px;flex-wrap:wrap}
-#analysis select,#analysis button{background:#111c28;color:#edf3fa;border:1px solid #304256;border-radius:8px;padding:8px 10px;font-size:12px}
-#analysis button{cursor:pointer}.pbi-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
-#analysis .cardx{background:#111c28;border:1px solid #304256;border-radius:13px;padding:13px;min-width:0}
-#analysis .k3{grid-column:span 3}.k4{grid-column:span 4}.k5{grid-column:span 5}.k6{grid-column:span 6}.k7{grid-column:span 7}.k8{grid-column:span 8}.k12{grid-column:span 12}
-#analysis .kpi{cursor:pointer}.kpi:hover{border-color:#e6a82e}.kpi .num{font-size:28px;font-weight:700}.kpi .lab{font-size:11px;color:#91a0b3}
-#analysis .headx{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.headx h3{font-size:14px;margin:0}.headx span{font-size:10px;color:#91a0b3}
-#analysis canvas{display:block;width:100%;height:235px}
-#analysis .heads{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-#analysis .headtile{border:1px solid #304256;border-radius:10px;padding:9px;cursor:pointer;background:#0d1721}
-#analysis .headtile:hover{border-color:#e6a82e}.headtile b{font-size:12px}.headtile small{display:block;color:#91a0b3;margin-top:3px}
-#analysis .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
-#analysis .green{background:#2db681}.yellow{background:#e2ad32}.red{background:#d84c58}
-#analysis .rows{max-height:240px;overflow:auto}.rowx{display:grid;grid-template-columns:1fr 70px 78px;gap:6px;padding:8px 0;border-bottom:1px solid #243344;font-size:11px}.rowx span{text-align:right;color:#91a0b3}
-#analysis .drill{background:#0b141d;border:1px solid #304256;border-radius:9px;padding:12px;min-height:95px;font-size:11px;line-height:1.7;color:#91a0b3}
-#analysis .drill strong{color:#edf3fa}
-@media(max-width:900px){#analysis .k3,#analysis .k4,#analysis .k5,#analysis .k6,#analysis .k7,#analysis .k8{grid-column:span 6}}
-@media(max-width:600px){#analysis .k3,#analysis .k4,#analysis .k5,#analysis .k6,#analysis .k7,#analysis .k8,#analysis .k12{grid-column:span 12}}
-</style>
-<div class="card ux">
- <div class="topbar">
-  <div><h2 style="margin:0">Análisis</h2><div class="press-muted">N3 Diario · N3 Semanal · Prensabotellas</div></div>
-  <div class="filters">
-   <select id="uxSource"><option value="all">Todas las inspecciones</option><option value="daily">N3 Diario</option><option value="weekly">N3 Semanal</option></select>
-   <select id="uxDays"><option value="30">Últimos 30 días</option><option value="90">Últimos 90 días</option><option value="180">Últimos 180 días</option><option value="all">Todo el historial</option></select>
-   <select id="uxHead"><option value="all">Todos los cabezales</option></select>
-   <select id="uxGroup"><option value="all">Todos los grupos</option><option value="mechanical">Elementos mecánicos</option><option value="electrical">Elementos eléctricos</option><option value="pneumatic">Elementos neumáticos</option><option value="other">Otros elementos</option></select>
-   <select id="uxSev"><option value="all">Todas las severidades</option><option value="high">Alta</option><option value="medium">Media</option><option value="low">Baja</option></select>
-   <button onclick="uxReset()">Restablecer</button>
+ 
+ <div class="grid" style="margin-top:14px">
+  <div class="card"><div class="label">Inspecciones</div><div class="value">24</div></div>
+  <div class="card"><div class="label">Cumplimiento diario</div><div class="value accent">96%</div></div>
+  <div class="card"><div class="label">Hallazgos activos</div><div class="value">4</div></div>
+  <div class="card"><div class="label">Repetitivos</div><div class="value">2</div></div>
+ </div>
+
+ <div class="section">
+  <h2>Estado por familia</h2><p>Consolidado de inspecciones N3 diarias y semanales.</p>
+  <div class="kpis">
+   <div class="card"><div class="label">Cabezal / tulipas</div><div class="value">92%</div><div class="bar"><div class="fill" style="width:92%"></div></div></div>
+   <div class="card"><div class="label">Transporte / cadenas</div><div class="value">88%</div><div class="bar"><div class="fill" style="width:88%"></div></div></div>
+   <div class="card"><div class="label">Eléctrico-neumático</div><div class="value">95%</div><div class="bar"><div class="fill" style="width:95%"></div></div></div>
   </div>
  </div>
 
- <div class="pbi-grid">
-  <div class="cardx kpi k3" onclick="uxDrill('hallazgos')"><div class="num" id="uxK1">0</div><div class="lab">Hallazgos</div></div>
-  <div class="cardx kpi k3" onclick="uxDrill('repetitivos')"><div class="num" id="uxK2">0</div><div class="lab">Puntos repetitivos</div></div>
-  <div class="cardx kpi kpi k3" onclick="uxDrill('riesgo')"><div class="num" id="uxK3">0</div><div class="lab">Prensabotellas con atención</div></div>
-  <div class="cardx kpi k3" onclick="uxDrill('severidad')"><div class="num" id="uxK4">0</div><div class="lab">Hallazgos de severidad alta</div></div>
-
-  <div class="cardx k12">
-   <div class="headx"><h3>Estado de confiabilidad</h3><span>Priorización automática con los registros disponibles</span></div>
-   <div id="uxReliability" class="heads"></div>
-  </div>
-
-  <div class="cardx k8"><div class="headx"><h3>Evolución de hallazgos</h3><span id="uxTrendLabel"></span></div><canvas id="uxTrend"></canvas></div>
-  <div class="cardx k4"><div class="headx"><h3>Estado prensabotellas</h3><span>216 posiciones</span></div><canvas id="uxDonut"></canvas></div>
-
-  <div class="cardx k6"><div class="headx"><h3>Hallazgos por punto</h3><span>Clasificados por grupo</span></div><canvas id="uxPoints"></canvas></div>
-  <div class="cardx k6"><div class="headx"><h3>Severidad</h3><span>Selecciona una barra</span></div><canvas id="uxSeverity"></canvas></div>
-
-  <div class="cardx k7"><div class="headx"><h3>Mapa de cabezales</h3><span>Selecciona un cabezal</span></div><div id="uxHeads" class="heads"></div></div>
-  <div class="cardx k5"><div class="headx"><h3>Seguimiento</h3><span>Prioridad</span></div><div id="uxAlerts" class="rows"></div></div>
-
-  <div class="cardx k12"><div class="headx"><h3 id="uxDrillTitle">Detalle</h3><span>Drill-through</span></div><div id="uxDrill" class="drill">Selecciona cualquier KPI, barra, cabezal o alerta para abrir el detalle.</div></div>
+ <div class="section">
+  <h2>Tendencia de condiciones</h2><p>Evolución de condiciones detectadas por componente.</p>
+  <table><thead><tr><th>Componente / condición</th><th>Frecuencia</th><th>Último hallazgo</th><th>Tendencia</th><th>Señal</th></tr></thead>
+  <tbody>
+   <tr><td>Cadena transporte botellas</td><td>4</td><td>Semana 3</td><td>↑</td><td><span class="badge byellow">Vigilar</span></td></tr>
+   <tr><td>Tulipas</td><td>3</td><td>Semana 4</td><td>→</td><td><span class="badge bgreen">Estable</span></td></tr>
+   <tr><td>Guías plásticas</td><td>2</td><td>Semana 4</td><td>↑</td><td><span class="badge byellow">Revisar</span></td></tr>
+   <tr><td>Presión de aire</td><td>1</td><td>Semana 4</td><td>→</td><td><span class="badge bgreen">Estable</span></td></tr>
+  </tbody></table>
  </div>
-</div>
+
+ <div class="section">
+  <h2>Motor de decisión</h2><p>Señales generadas a partir del historial de inspecciones.</p>
+  <div class="row"><div><b>Repetición del mismo componente</b><div class="desc">Mismo punto reportado varias veces en ventanas consecutivas.</div></div><span class="badge byellow">Vigilar</span></div>
+  <div class="row"><div><b>Severidad alta/crítica</b><div class="desc">Prioriza revisión y seguimiento de la condición registrada.</div></div><span class="badge bred">Atención</span></div>
+  <div class="row"><div><b>Deterioro progresivo</b><div class="desc">La condición aumenta de frecuencia o severidad con el tiempo.</div></div><span class="badge byellow">Analizar</span></div>
+ </div>
 </section>
-<style>
-.routineGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.routineCard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:15px}.routineHead{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.routineId{font:11px monospace;color:var(--amber)}.routineName{font-weight:800;margin-top:4px}.routineMeta{color:var(--muted);font-size:11px;margin-top:4px}.routineActions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.routineActions button{flex:1;min-width:120px}.routineFinding{display:none;margin-top:10px;padding:11px;background:var(--yellowbg);border:1px solid #735d1d;border-radius:9px}.routineFinding.open{display:block}.routineFindingGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.routineToolbar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}.routineToolbar label{font-size:11px;color:var(--muted)}.routineToolbar input,.routineToolbar select{margin-top:5px}.routineSave{margin-top:14px}.routineFeedback{margin-top:10px;color:var(--green);font-size:12px;min-height:18px}.routineSummary{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.routineSummary .badge{cursor:default}@media(max-width:700px){.routineGrid{grid-template-columns:1fr}.routineToolbar{grid-template-columns:1fr 1fr}.routineFindingGrid{grid-template-columns:1fr}}@media(max-width:480px){.routineToolbar{grid-template-columns:1fr}}
-</style>
+
 <section id="daily" class="view">
-<div class="section">
- <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
-  <div><h2>N3 Diario</h2><p>Registro de inspección por punto, sin usar estados "OK / No OK".</p></div>
-  <span class="badge bgreen">N3 DIARIO</span>
+ <div class="section">
+  <h2>N3 · Inspección diaria</h2>
+  <p>Orientada a condiciones operativas de la encajonadora/desencajonadora. Cada punto se verifica con un solo check; una condición se registra aparte.</p>
+  <div class="formgrid">
+   <div><label>Fecha<input type="date"></label></div>
+   <div><label>Turno<select><option>Seleccionar</option><option>1</option><option>2</option><option>3</option></select></label></div>
+  </div>
  </div>
- <div class="routineToolbar">
-  <label>Fecha<input id="dailyDate" type="date"></label>
-  <label>Cabezal<select id="dailyHead"></select></label>
-  <label>Fila<select id="dailyRow"></select></label>
-  <label>Columna<select id="dailyCol"><option value="A">A</option><option value="B">B</option><option value="C">C</option></select></label>
- </div>
- <div class="routineSummary"><span class="badge bgreen">Condición normal</span><span class="badge byellow">Hallazgo requiere detalle</span></div>
- <div class="routineGrid" id="dailyRoutineGrid"></div>
- <div class="routineFeedback" id="dailyFeedback"></div>
-</div>
+ <div id="dailyList"></div>
+ <div class="section"><button class="btn" onclick="finish('daily')">Finalizar inspección diaria</button></div>
 </section>
+
 <section id="weekly" class="view">
-<div class="section">
- <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap">
-  <div><h2>N3 Semanal</h2><p>Registro de inspección por punto, sin usar estados "OK / No OK".</p></div>
-  <span class="badge bgreen">N3 SEMANAL</span>
+ <div class="section">
+  <h2>N3 · Inspección semanal</h2>
+  <p>Orientada a la condición física y funcional de componentes que complementa la inspección diaria.</p>
+  <div class="formgrid">
+   <div><label>Fecha<input type="date"></label></div>
+   <div><label>Semana<select><option>Seleccionar</option><option>Semana 1</option><option>Semana 2</option><option>Semana 3</option><option>Semana 4</option></select></label></div>
+  </div>
  </div>
- <div class="routineToolbar">
-  <label>Fecha<input id="weeklyDate" type="date"></label>
-  <label>Cabezal<select id="weeklyHead"></select></label>
-  <label>Fila<select id="weeklyRow"></select></label>
-  <label>Columna<select id="weeklyCol"><option value="A">A</option><option value="B">B</option><option value="C">C</option></select></label>
- </div>
- <div class="routineSummary"><span class="badge bgreen">Condición normal</span><span class="badge byellow">Hallazgo requiere detalle</span></div>
- <div class="routineGrid" id="weeklyRoutineGrid"></div>
- <div class="routineFeedback" id="weeklyFeedback"></div>
+ <div id="weeklyList"></div>
+ <div class="section"><button class="btn" onclick="finish('weekly')">Finalizar inspección semanal</button></div>
+</section>
+
+
+
+<section id="analysis" class="view">
+<style>
+#analysis .ana-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+#analysis .ana-filter{background:var(--panel2,#111c28);color:var(--text,#edf3fa);border:1px solid var(--border,#2b3b4f);border-radius:8px;padding:8px 10px;font-size:12px}
+#analysis .ana-dashboard{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+#analysis .ana-card{background:var(--panel2,#111c28);border:1px solid var(--border,#2b3b4f);border-radius:14px;padding:14px;min-width:0}
+#analysis .span3{grid-column:span 3}.span4{grid-column:span 4}.span6{grid-column:span 6}.span8{grid-column:span 8}.span12{grid-column:span 12}
+#analysis .ana-kpi b{display:block;font-size:25px;color:var(--text,#edf3fa)}#analysis .ana-kpi span{font-size:11px;color:var(--muted,#91a0b3)}
+#analysis .ana-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+#analysis .ana-title h3{margin:0;font-size:14px}
+#analysis canvas{width:100%;height:230px}
+#analysis .ana-table{width:100%;border-collapse:collapse;font-size:11px}
+#analysis .ana-table th,#analysis .ana-table td{padding:8px;border-bottom:1px solid var(--border,#2b3b4f);text-align:left}
+#analysis .ana-table th{color:var(--muted,#91a0b3)}
+#analysis .ana-risk{display:flex;justify-content:space-between;gap:8px;padding:9px;border-bottom:1px solid var(--border,#2b3b4f);font-size:11px}
+#analysis .ana-risk strong{color:var(--text,#edf3fa)}
+#analysis .ana-pill{padding:3px 6px;border-radius:6px;font-size:9px}
+#analysis .p-red{background:rgba(216,76,88,.14);color:#e05b67}.p-yellow{background:rgba(226,173,50,.14);color:#e2ad32}.p-green{background:rgba(45,182,129,.14);color:#2db681}
+#analysis .ana-insight{padding:10px 0;border-bottom:1px solid var(--border,#2b3b4f);font-size:12px;line-height:1.45}
+@media(max-width:900px){#analysis .span3,#analysis .span4,#analysis .span6,#analysis .span8{grid-column:span 6}}
+@media(max-width:600px){#analysis .span3,#analysis .span4,#analysis .span6,#analysis .span8,#analysis .span12{grid-column:span 12}}
+</style>
+
+<div class="card">
+  <div class="ana-toolbar">
+    <select id="anaSource" class="ana-filter"><option value="all">Todas las inspecciones</option><option value="daily">N3 Diario</option><option value="weekly">N3 Semanal</option></select>
+    <select id="anaPeriod" class="ana-filter"><option value="30">Últimos 30 días</option><option value="90">Últimos 90 días</option><option value="all">Todo el periodo</option></select>
+    <select id="anaHead" class="ana-filter"><option value="all">Todos los cabezales</option></select>
+    <select id="anaSeverity" class="ana-filter"><option value="all">Toda severidad</option><option value="high">Alta</option><option value="medium">Media</option><option value="low">Baja</option></select>
+    <button class="btn" onclick="anaReset()">Restablecer</button>
+  </div>
+
+  <div class="ana-dashboard">
+    <div class="ana-card ana-kpi span3"><b id="anaKpiIns">0</b><span>Inspecciones analizadas</span></div>
+    <div class="ana-card ana-kpi span3"><b id="anaKpiFind">0</b><span>Hallazgos</span></div>
+    <div class="ana-card ana-kpi span3"><b id="anaKpiRep">0</b><span>Puntos repetitivos</span></div>
+    <div class="ana-card ana-kpi span3"><b id="anaKpiPress">0</b><span>Prensabotellas en riesgo</span></div>
+
+    <div class="ana-card span8"><div class="ana-title"><h3>Evolución de hallazgos</h3><span id="anaTrendLabel" class="press-muted"></span></div><canvas id="anaTrend"></canvas></div>
+    <div class="ana-card span4"><div class="ana-title"><h3>Estado de prensabotellas</h3></div><canvas id="anaPressChart"></canvas></div>
+
+    <div class="ana-card span6"><div class="ana-title"><h3>Hallazgos por punto de inspección</h3></div><canvas id="anaPointChart"></canvas></div>
+    <div class="ana-card span6"><div class="ana-title"><h3>Distribución de severidad</h3></div><canvas id="anaSeverityChart"></canvas></div>
+
+    <div class="ana-card span12"><div class="ana-title"><h3>Vinculación de hallazgos con prensabotellas</h3><span class="press-muted">N3 Diario + N3 Semanal → posición → historial → estado</span></div><div id="anaLinkStatus" class="ana-insight"></div></div>
+<div class="ana-card span8"><div class="ana-title"><h3>Relación inspección ↔ prensabotellas</h3><span class="press-muted">Coincidencias registradas</span></div><table class="ana-table"><thead><tr><th>Prensabotella</th><th>Inspección</th><th>Condición</th><th>Último cambio</th><th>Estado</th></tr></thead><tbody id="anaPressTable"></tbody></table></div>
+    <div class="ana-card span4"><div class="ana-title"><h3>Seguimiento</h3></div><div id="anaInsights"></div></div>
+  </div>
 </div>
 </section>
 <section id="press" class="view">
@@ -644,7 +657,7 @@ function anaRefresh(){
  tb.innerHTML=matches.length?matches.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join(''):'<tr><td colspan="5" class="press-muted">No hay posiciones en riesgo con los filtros actuales.</td></tr>';
  const ins=[];if(n.requerido)ins.push(`<div class="ana-insight"><span class="ana-pill p-red">ACCIÓN</span> ${n.requerido} prensabotellas requieren cambio.</div>`);if(n.proximo)ins.push(`<div class="ana-insight"><span class="ana-pill p-yellow">SEGUIMIENTO</span> ${n.proximo} prensabotellas se aproximan a su vida útil.</div>`);if(!rows.length)ins.push('<div class="ana-insight">No hay registros de inspección compatibles con los filtros. El análisis no puede concluir tendencias de inspección todavía.</div>');if(rows.length&&!Object.keys(point).length)ins.push('<div class="ana-insight">Hay inspecciones registradas, pero falta identificar el punto/componente para analizar repetitividad.</div>');document.getElementById('anaInsights').innerHTML=ins.join('')||'<div class="ana-insight">Sin alertas adicionales.</div>';
 }
-window.anaRefresh=anaRefresh; window.anaReset=function(){document.getElementById('anaSource').value='all';document.getElementById('anaPeriod').value='30';document.getElementById('anaHead').value='all';document.getElementById('anaSeverity').value='all';anaRefresh()}
+window.anaReset=function(){document.getElementById('anaSource').value='all';document.getElementById('anaPeriod').value='30';document.getElementById('anaHead').value='all';document.getElementById('anaSeverity').value='all';anaRefresh()}
 document.addEventListener('DOMContentLoaded',function(){['anaSource','anaPeriod','anaHead','anaSeverity'].forEach(id=>document.getElementById(id)?.addEventListener('change',anaRefresh));anaRefresh();window.addEventListener('resize',anaRefresh)});
 })();
 </script>
@@ -729,362 +742,5 @@ document.addEventListener('DOMContentLoaded',sync);
   };
 })();
 </script>
-
-<script>
-(function(){
-function q(id){return document.getElementById(id)}
-function iso(){return new Date().toISOString().slice(0,10)}
-function load(k,d){try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}catch(e){return d}}
-function save(k,v){localStorage.setItem(k,JSON.stringify(v))}
-function populateCapture(){
- const h=q('capHead'),r=q('capRow'),d=q('capDate');
- if(!h)return;
- h.innerHTML=Array.from({length:9},(_,i)=>`<option value="${i+1}">Cabezal ${i+1}</option>`).join('');
- r.innerHTML=Array.from({length:8},(_,i)=>`<option value="${8-i}">Fila ${8-i}</option>`).join('');
- if(d&&!d.value)d.value=iso();
-}
-window.registrarHallazgoL3=function(){
- const date=q('capDate').value||iso(), source=q('capSource').value, head=+q('capHead').value,row=+q('capRow').value,column=q('capCol').value;
- const pointEl=q('capPoint'),point=pointEl.options[pointEl.selectedIndex]?.text||'',pointId=pointEl.value,reason=q('capReason').value,condition=q('capCondition').value,severity=q('capSeverity').value,description=q('capDesc').value.trim();
- const ins=load('l3_n3_inspections',[]);
- ins.push({id:'N3-'+Date.now(),date,source,head,row,column,point,pointId,reason,condition,status:condition==='hallazgo'?'hallazgo':'normal',severity,description});
- save('l3_n3_inspections',ins);
- if(window.sincronizarInspeccionesPrensabotellas)window.sincronizarInspeccionesPrensabotellas();
- const p=load('l3_prensabotellas',{}),k=`C${head}-F${row}-${column}`;
- if(p[k]){
-   p[k].lastInspection=date;p[k].lastCondition=condition;p[k].lastInspectionPoint=point;
-   if(condition==='hallazgo'){p[k].followUpRequired=true;p[k].followUpReason=reason||description||point;p[k].lastFindingReason=reason}
-   save('l3_prensabotellas',p);
- }
- q('capFeedback').innerHTML=`Guardado: <b>C${head}-F${row}-${column}</b> · ${source==='daily'?'N3 Diario':'N3 Semanal'} · ${condition==='hallazgo'?'Hallazgo registrado':'Condición normal'}.`;
- q('capDesc').value='';q('capCondition').value='normal';q('capSeverity').value='';
- if(window.anaRefresh)window.anaRefresh();renderMaintenance();
-}
-function renderMaintenance(){
- const p=load('l3_prensabotellas',{}),arr=Object.values(p),el=q('maintQueue');if(!el)return;
- const actions=arr.filter(x=>x.followUpRequired||x.reliability?.hasRecurringRisk||x.next&&((new Date(x.next)-new Date())/86400000)<=14);
- if(!actions.length){el.innerHTML='<div class="press-muted">No hay acciones pendientes.</div>';return}
- el.innerHTML=actions.slice(0,12).map(x=>{
-   let s=x.followUpRequired?'Hallazgo de inspección':x.reliability?.hasRecurringRisk?'Hallazgo repetitivo':'Próximo a vencer';
-   let cls=x.followUpRequired?'p-red':x.reliability?.hasRecurringRisk?'p-yellow':'p-green';
-   return `<div class="ana-insight"><b>C${x.h}-F${x.r}-${x.c}</b> <span class="ana-pill ${cls}">${s}</span><br><span class="press-muted">${x.followUpReason||'Revisar condición y programación de cambio.'}</span></div>`;
- }).join('');
-}
-document.addEventListener('DOMContentLoaded',function(){populateCapture();renderMaintenance();});
-})();
-</script>
-
-<script>
-(function(){
-const CATALOG={
- daily:[
-  {id:'D01',name:'Prensabotella',component:'Prensabotella'},
-  {id:'D02',name:'Guía',component:'Guía'},
-  {id:'D03',name:'Cadena',component:'Cadena'},
-  {id:'D04',name:'Transportador',component:'Transportador'},
-  {id:'D05',name:'Encajonado',component:'Encajonado'}
- ],
- weekly:[
-  {id:'S01',name:'Prensabotella',component:'Prensabotella'},
-  {id:'S02',name:'Guía',component:'Guía'},
-  {id:'S03',name:'Cadena',component:'Cadena'},
-  {id:'S04',name:'Transportador',component:'Transportador'},
-  {id:'S05',name:'Encajonado',component:'Encajonado'}
- ]
-};
-window.L3_INSPECTION_CATALOG=CATALOG;
-
-function fillPointCatalog(){
- const source=document.getElementById('capSource'),point=document.getElementById('capPoint');
- if(!source||!point)return;
- const refresh=()=>{
-   const list=CATALOG[source.value]||[];
-   point.innerHTML=list.map(x=>`<option value="${x.id}" data-component="${x.component}">${x.name}</option>`).join('');
- };
- source.addEventListener('change',refresh);refresh();
- const preview=document.getElementById('catalogPreview');
- if(preview){
-   preview.innerHTML=`<table class="ana-table"><thead><tr><th>Rutina</th><th>ID</th><th>Punto</th><th>Componente</th></tr></thead><tbody>${
-     Object.entries(CATALOG).flatMap(([k,v])=>v.map(x=>`<tr><td>${k==='daily'?'N3 Diario':'N3 Semanal'}</td><td>${x.id}</td><td>${x.name}</td><td>${x.component}</td></tr>`)).join('')
-   }</tbody></table>`;
- }
-}
-document.addEventListener('DOMContentLoaded',fillPointCatalog);
-})();
-</script>
-
-
-
-<script>
-(function(){
-const S={source:'all',days:'30',head:'all',group:'all',sev:'all',drill:null};
-const C={a:'#e6a82e',g:'#2db681',y:'#e2ad32',r:'#d84c58',grid:'#304256',tx:'#edf3fa',mu:'#91a0b3'};
-const $=id=>document.getElementById(id);
-const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(d))}catch(e){return d}};
-const inspections=()=>load('l3_n3_inspections',[]);
-const presses=()=>Object.values(load('l3_prensabotellas',{}));
-
-const GROUPS={
- mechanical:['Prensabotella','Guía','Cadena','Transportador','Encajonado','Mecánico'],
- electrical:['Sensor','Motor','Tablero','Cableado','Eléctrico','Fotocelda','Variador','Encoder'],
- pneumatic:['Neumático','Cilindro','Válvula','Aire','Electroválvula']
-};
-function groupOf(x){
- const s=((x.point||x.component||'')+' '+(x.reason||'')).toLowerCase();
- if(GROUPS.electrical.some(k=>s.includes(k.toLowerCase())))return'electrical';
- if(GROUPS.pneumatic.some(k=>s.includes(k.toLowerCase())))return'pneumatic';
- if(GROUPS.mechanical.some(k=>s.includes(k.toLowerCase())))return'mechanical';
- return'other';
-}
-function relevant(){
- let r=inspections();
- if(S.source!=='all')r=r.filter(x=>x.source===S.source);
- if(S.days!=='all'){let cut=Date.now()-+S.days*86400000;r=r.filter(x=>!x.date||new Date(x.date).getTime()>=cut)}
- if(S.head!=='all')r=r.filter(x=>String(x.head)===String(S.head));
- if(S.group!=='all')r=r.filter(x=>groupOf(x)===S.group);
- if(S.sev!=='all')r=r.filter(x=>x.severity===S.sev);
- return r;
-}
-function isFinding(x){return x.condition==='hallazgo'||x.status==='hallazgo'||x.ok===false}
-function pStatus(p){
- if(p.next){let d=(new Date(p.next)-new Date())/86400000;if(d<0)return'red';if(d<=14)return'yellow'}
- if(p.followUpRequired||p.reliability?.hasRecurringRisk)return'yellow';
- return'green';
-}
-function size(c,h=235){let r=c.getBoundingClientRect(),d=devicePixelRatio||1;c.width=r.width*d;c.height=h*d;let x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return[x,r.width,h]}
-function bars(id,labels,vals,click){
- let c=$(id);if(!c)return;let [x,w,h]=size(c),max=Math.max(1,...vals),p=30,bw=Math.max(13,(w-p-10)/Math.max(1,labels.length)-8);
- x.clearRect(0,0,w,h);x.strokeStyle=C.grid;x.beginPath();x.moveTo(p,10);x.lineTo(p,h-30);x.lineTo(w-5,h-30);x.stroke();
- vals.forEach((v,i)=>{let bh=(h-58)*v/max,xx=p+i*(bw+8),yy=h-30-bh;x.fillStyle=C.a;x.fillRect(xx,yy,bw,bh);x.fillStyle=C.mu;x.font='10px sans-serif';x.fillText(v,xx,yy-4);x.save();x.translate(xx+bw/2,h-8);x.rotate(-.35);x.textAlign='right';x.fillText(labels[i].slice(0,18),0,0);x.restore()});
- c.onclick=e=>{let i=Math.floor((e.offsetX-p)/(bw+8));if(i>=0&&i<labels.length)click(labels[i])}
-}
-function line(id,vals){
- let c=$(id);if(!c)return;let[x,w,h]=size(c),p=30,max=Math.max(1,...vals);x.clearRect(0,0,w,h);x.strokeStyle=C.grid;x.beginPath();x.moveTo(p,10);x.lineTo(p,h-30);x.lineTo(w-5,h-30);x.stroke();x.strokeStyle=C.a;x.lineWidth=2;x.beginPath();
- vals.forEach((v,i)=>{let xx=p+(w-p-10)*(i/Math.max(1,vals.length-1)),yy=h-30-(h-52)*v/max;i?x.lineTo(xx,yy):x.moveTo(xx,yy);x.fillStyle=C.a;x.beginPath();x.arc(xx,yy,3,0,Math.PI*2);x.fill();});x.stroke()
-}
-function donut(id,v,click){
- let c=$(id);if(!c)return;let[x,w,h]=size(c),cx=w/2,cy=h/2,r=Math.min(w,h)*.30,t=Math.max(1,v.reduce((a,b)=>a+b,0)),a=-Math.PI/2;x.clearRect(0,0,w,h);
- [C.g,C.y,C.r].forEach((co,i)=>{let b=a+2*Math.PI*v[i]/t;x.beginPath();x.strokeStyle=co;x.lineWidth=28;x.arc(cx,cy,r,a,b);x.stroke();a=b});
- x.fillStyle=C.tx;x.textAlign='center';x.font='bold 22px sans-serif';x.fillText(t,cx,cy+6);x.font='10px sans-serif';x.fillStyle=C.mu;x.fillText('posiciones',cx,cy+23);
- c.onclick=()=>click();
-}
-function render(){
- let r=relevant(), f=r.filter(isFinding), p=presses(), counts={green:0,yellow:0,red:0};p.forEach(q=>counts[pStatus(q)]++);
- let byPoint={};f.forEach(x=>{let k=x.point||x.component||'Sin identificar';byPoint[k]=(byPoint[k]||0)+1});
- let repeat=Object.values(byPoint).filter(v=>v>1).length, high=f.filter(x=>x.severity==='high').length;
- $('uxK1').textContent=f.length;$('uxK2').textContent=repeat;$('uxK3').textContent=counts.red+counts.yellow;$('uxK4').textContent=high;
-
- let groups=['mechanical','electrical','pneumatic','other'].map(g=>{
-   let gr=f.filter(x=>groupOf(x)===g), pts={};gr.forEach(x=>{let k=x.point||x.component||'Sin identificar';pts[k]=(pts[k]||0)+1});
-   let recurring=Object.values(pts).filter(v=>v>1).length, high=gr.filter(x=>x.severity==='high').length;
-   let level=high>0?'red':recurring>1?'yellow':'green';
-   let label={mechanical:'Elementos mecánicos',electrical:'Elementos eléctricos',pneumatic:'Elementos neumáticos',other:'Otros elementos'}[g];
-   return {g,label,n:gr.length,recurring,high,level};
- });
- $('uxReliability').innerHTML=groups.map(g=>`<div class="headtile" onclick="uxGroup('${g.g}')"><b><i class="dot ${g.level}"></i>${g.label}</b><small>${g.n} hallazgos · ${g.recurring} puntos repetitivos · ${g.high} alta</small></div>`).join('');
- let weeks=Array.from({length:8},(_,i)=>f.filter(x=>{if(!x.date)return false;let age=(Date.now()-new Date(x.date).getTime())/86400000;return age>=i*7&&age<(i+1)*7}).length).reverse();line('uxTrend',weeks);
- $('uxTrendLabel').textContent=`${f.length} hallazgo(s) con filtros actuales`;
- donut('uxDonut',[counts.green,counts.yellow,counts.red],()=>uxDrill('prensabotellas'));
- let ps=Object.entries(byPoint).sort((a,b)=>b[1]-a[1]).slice(0,8);bars('uxPoints',ps.map(x=>x[0]),ps.map(x=>x[1]),lab=>uxFilterPoint(lab));
- let sv=['high','medium','low'].map(k=>f.filter(x=>x.severity===k).length);bars('uxSeverity',['Alta','Media','Baja'],sv,lab=>{S.sev={Alta:'high',Media:'medium',Baja:'low'}[lab];$('uxSev').value=S.sev;render()});
- let heads='';for(let h=1;h<=9;h++){let hp=p.filter(x=>+x.h===h),risk=hp.filter(x=>pStatus(x)!=='green').length,hf=f.filter(x=>String(x.head)===String(h)).length;heads+=`<div class="headtile" onclick="uxHead(${h})"><b><i class="dot ${risk>4?'red':risk?'yellow':'green'}"></i>Cabezal ${h}</b><small>${hf} hallazgo(s) · ${risk} posiciones con atención</small></div>`}$('uxHeads').innerHTML=heads;
- let alerts=[];p.filter(x=>pStatus(x)==='red').slice(0,8).forEach(x=>alerts.push({k:`C${x.h}-F${x.r}-${x.c}`,t:'Cambio requerido',cl:'red'}));f.slice().reverse().slice(0,8).forEach(x=>alerts.push({k:`C${x.head}-F${x.row}-${x.column}`,t:x.reason||x.point||'Hallazgo',cl:x.severity==='high'?'red':'yellow'}));
- $('uxAlerts').innerHTML=alerts.length?alerts.slice(0,12).map((a,i)=>`<div class="rowx" onclick="uxDrillAlert(${i})"><b>${a.k}</b><span>${a.t}</span><span class="${a.cl}">${a.cl==='red'?'ACCIÓN':'SEGUIMIENTO'}</span></div>`).join(''):'<div class="press-muted">Sin elementos para seguimiento con estos filtros.</div>';
-}
-window.uxGroup=function(g){S.group=g;$('uxGroup').value=g;render();$('uxDrillTitle').textContent={mechanical:'Elementos mecánicos',electrical:'Elementos eléctricos',pneumatic:'Elementos neumáticos',other:'Otros elementos'}[g];$('uxDrill').innerHTML=detail(relevant().filter(isFinding))};
-window.uxFilterPoint=function(label){S.drill={type:'point',label};let f=relevant().filter(x=>isFinding(x)&&(x.point||x.component||'Sin identificar')===label);$('uxDrillTitle').textContent='Punto: '+label;$('uxDrill').innerHTML=detail(f)}
-window.uxHead=function(h){S.head=String(h);$('uxHead').value=String(h);render();let f=relevant();$('uxDrillTitle').textContent='Cabezal '+h;$('uxDrill').innerHTML=detail(f.filter(x=>String(x.head)===String(h)))}
-window.uxDrill=function(type){$('uxDrillTitle').textContent=type==='hallazgos'?'Todos los hallazgos':type==='repetitivos'?'Puntos repetitivos':type==='riesgo'?'Prensabotellas con atención':'Severidad alta';$('uxDrill').innerHTML=detail(relevant().filter(isFinding))}
-window.uxDrillAlert=function(i){uxDrill('alerta')}
-window.uxReset=function(){S.source='all';S.days='30';S.head='all';S.group='all';S.sev='all';$('uxSource').value='all';$('uxDays').value='30';$('uxHead').value='all';$('uxGroup').value='all';$('uxSev').value='all';render()}
-function detail(rows){if(!rows.length)return'No existen registros suficientes con los filtros actuales.';return `<strong>${rows.length} registro(s)</strong><br>`+rows.slice(0,25).map(x=>`${x.date||'—'} · C${x.head||'?'}-F${x.row||'?'}-${x.column||'?'} · ${x.point||x.component||'—'} · ${x.reason||x.condition||'—'} · ${x.severity||'—'}`).join('<br>')}
-function setup(){for(let h=1;h<=9;h++)$('uxHead').insertAdjacentHTML('beforeend',`<option value="${h}">Cabezal ${h}</option>`);$('uxSource').onchange=e=>{S.source=e.target.value;render()};$('uxDays').onchange=e=>{S.days=e.target.value;render()};$('uxHead').onchange=e=>{S.head=e.target.value;render()};$('uxGroup').onchange=e=>{S.group=e.target.value;render()};$('uxSev').onchange=e=>{S.sev=e.target.value;render()};render()}
-document.addEventListener('DOMContentLoaded',setup);
-})();
-</script>
-
-<!-- ENCajonadora L3 V1 - datos en vivo -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-(() => {
-  const SB_URL = "https://pbqyivpukhacralpdnsk.supabase.co";
-  const SB_KEY = "sb_publishable_k5tVoJuVPJO3Eg0eWnGcuQ_1i4QHATA";
-  const sb = window.supabase.createClient(SB_URL, SB_KEY);
-  window.L3_LIVE = { inspections: [], presses: [] };
-
-  async function refreshLive() {
-    const [a,b] = await Promise.all([
-      sb.from("l3_inspections").select("*").order("created_at",{ascending:false}),
-      sb.from("l3_press_bottles").select("*").order("head").order("row_no").order("column_no")
-    ]);
-    if (a.error) console.error(a.error);
-    if (b.error) console.error(b.error);
-    window.L3_LIVE.inspections = a.data || [];
-    window.L3_LIVE.presses = b.data || [];
-    try { localStorage.setItem("l3_n3_inspections", JSON.stringify(window.L3_LIVE.inspections)); } catch(e){}
-    try {
-      const obj={};
-      window.L3_LIVE.presses.forEach(p => {
-        obj[p.id] = {
-          id:p.id,h:p.head,r:p.row_no,c:p.column_no,
-          installed:p.installed_at,last:p.last_change_at,next:p.next_change_at,
-          status:p.status,followUpRequired:p.status==="due"||p.status==="overdue"
-        };
-      });
-      localStorage.setItem("l3_prensabotellas", JSON.stringify(obj));
-    } catch(e){}
-    if (typeof render === "function") render();
-    if (typeof window.refreshAnalysis === "function") window.refreshAnalysis();
-    const badge=document.getElementById("liveStatus");
-    if(badge){badge.textContent="● EN VIVO";badge.style.color="#34d399";}
-  }
-
-  // Interceptamos las funciones de lectura para que el análisis existente use los datos centrales.
-  const oldText = document.body.innerHTML;
-  window.addEventListener("load", () => {
-    const badge=document.createElement("span");
-    badge.id="liveStatus";
-    badge.textContent="● CONECTANDO";
-    badge.style.cssText="font:10px 'JetBrains Mono',monospace;color:#e2ad32;margin-left:10px;";
-    const brand=document.querySelector("header");
-    if(brand) brand.appendChild(badge);
-    refreshLive();
-  });
-
-  sb.channel("l3-live")
-    .on("postgres_changes",{event:"*",schema:"public",table:"l3_inspections"},refreshLive)
-    .on("postgres_changes",{event:"*",schema:"public",table:"l3_press_bottles"},refreshLive)
-    .subscribe();
-
-  window.L3_SAVE_INSPECTION = async function(payload) {
-    const {data,error}=await sb.from("l3_inspections").insert(payload).select().single();
-    if(error) throw error;
-    await refreshLive();
-    return data;
-  };
-  window.L3_SAVE_PRESS = async function(payload) {
-    const {data,error}=await sb.from("l3_press_bottles")
-      .upsert(payload,{onConflict:"head,row_no,column_no"}).select().single();
-    if(error) throw error;
-    await refreshLive();
-    return data;
-  };
-})();
-</script>
-
-<script>
-(function(){
- const CATALOG={
-  daily:[{id:'D01',name:'Prensabotella',component:'Prensabotella'},{id:'D02',name:'Guía',component:'Guía'},{id:'D03',name:'Cadena',component:'Cadena'},{id:'D04',name:'Transportador',component:'Transportador'},{id:'D05',name:'Encajonado',component:'Encajonado'}],
-  weekly:[{id:'S01',name:'Prensabotella',component:'Prensabotella'},{id:'S02',name:'Guía',component:'Guía'},{id:'S03',name:'Cadena',component:'Cadena'},{id:'S04',name:'Transportador',component:'Transportador'},{id:'S05',name:'Encajonado',component:'Encajonado'}]
- };
- const today=()=>new Date().toISOString().slice(0,10);
- function esc(v){return String(v??'').replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));}
- function setup(source){
-  const h=document.getElementById(source+'Head'),r=document.getElementById(source+'Row'),d=document.getElementById(source+'Date'),g=document.getElementById(source+'RoutineGrid');
-  if(!h||!g)return;
-  h.innerHTML=Array.from({length:9},(_,i)=>`<option value="${i+1}">Cabezal ${i+1}</option>`).join('');
-  r.innerHTML=Array.from({length:8},(_,i)=>`<option value="${8-i}">Fila ${8-i}</option>`).join('');
-  d.value=today();
-  g.innerHTML=CATALOG[source].map((x,i)=>`<article class="routineCard" data-point="${esc(x.id)}">
-    <div class="routineHead"><div><div class="routineId">${esc(x.id)}</div><div class="routineName">${esc(x.name)}</div><div class="routineMeta">${esc(x.component)}</div></div><span class="badge" id="${source}Badge${i}">Pendiente</span></div>
-    <div class="routineActions"><button class="btn" onclick="routineNormal('${source}',${i})">Condición normal</button><button class="btn" onclick="routineFinding('${source}',${i})">Registrar hallazgo</button></div>
-    <div class="routineFinding" id="${source}Finding${i}"><div class="routineFindingGrid"><label style="font-size:11px;color:var(--muted)">Motivo<select id="${source}Reason${i}"><option value="Desgaste">Desgaste</option><option value="Daño">Daño</option><option value="Desajuste">Desajuste</option><option value="Fuga">Fuga</option><option value="Suciedad">Suciedad</option><option value="Ruido/vibración">Ruido/vibración</option><option value="Otro">Otro</option></select></label><label style="font-size:11px;color:var(--muted)">Severidad<select id="${source}Severity${i}"><option value="low">Baja</option><option value="medium">Media</option><option value="high">Alta</option></select></label><label style="font-size:11px;color:var(--muted)">Acción<input id="${source}Action${i}" placeholder="Seguimiento / mantenimiento"></label><label style="font-size:11px;color:var(--muted)">Observación<input id="${source}Obs${i}" placeholder="Describe la condición"></label></div><button class="btn routineSave" onclick="saveRoutineFinding('${source}',${i})">Guardar hallazgo</button></div>
-  </article>`).join('');
- }
- function point(source,i){return CATALOG[source][i]}
- window.routineNormal=function(source,i){
-  const x=point(source,i), head=+document.getElementById(source+'Head').value,row=+document.getElementById(source+'Row').value,col=+document.getElementById(source+'Col').value;
-  const payload={inspection_date:document.getElementById(source+'Date').value||today(),source,head,row_no:row,column_no:col,point:x.name,component_group:window.groupOf?window.groupOf({point:x.name,component:x.component}):'mechanical',condition:'normal',finding_reason:null,severity:null,observation:null,action:null,maintenance_required:false};
-  persist(source,i,payload,'Condición normal registrada');
- };
- window.routineFinding=function(source,i){document.getElementById(source+'Finding'+i).classList.add('open');document.getElementById(source+'Badge'+i).textContent='Requiere detalle';document.getElementById(source+'Badge'+i).className='badge byellow'};
- window.saveRoutineFinding=function(source,i){
-  const x=point(source,i),head=+document.getElementById(source+'Head').value,row=+document.getElementById(source+'Row').value,col=+document.getElementById(source+'Col').value;
-  const sev=document.getElementById(source+'Severity'+i).value;
-  const payload={inspection_date:document.getElementById(source+'Date').value||today(),source,head,row_no:row,column_no:col,point:x.name,component_group:window.groupOf?window.groupOf({point:x.name,component:x.component}):'mechanical',condition:'finding',finding_reason:document.getElementById(source+'Reason'+i).value,severity:sev,observation:document.getElementById(source+'Obs'+i).value.trim(),action:document.getElementById(source+'Action'+i).value.trim(),maintenance_required:true};
-  persist(source,i,payload,'Hallazgo registrado');
- };
- async function persist(source,i,payload,msg){
-  const feedback=document.getElementById(source+'Feedback');
-  try{
-   if(window.L3_SAVE_INSPECTION){await window.L3_SAVE_INSPECTION(payload);}
-   else {const k='l3_n3_inspections';const arr=JSON.parse(localStorage.getItem(k)||'[]');arr.push({...payload,id:'N3-'+Date.now(),date:payload.inspection_date,row:payload.row_no,column:payload.column_no,status:payload.condition});localStorage.setItem(k,JSON.stringify(arr));}
-   const b=document.getElementById(source+'Badge'+i);b.textContent=payload.condition==='finding'?'Hallazgo registrado':'Registrado';b.className='badge '+(payload.condition==='finding'?'byellow':'bgreen');
-   feedback.textContent=msg+' · '+payload.point+' · C'+payload.head+'-F'+payload.row_no+'-'+payload.column_no;
-   if(window.render)window.render();
-   if(window.anaRefresh)window.anaRefresh();
-  }catch(e){feedback.textContent='No se pudo guardar: '+(e.message||e);feedback.style.color='var(--red)';}
- }
- document.addEventListener('DOMContentLoaded',()=>{setup('daily');setup('weekly');});
-})();
-</script>
-
-<script>
-(function(){
-const DAILY=[
-{id:'D01',name:'Inspección visual general',desc:'Verificar condición general y detectar anomalías visibles.'},
-{id:'D02',name:'Prensabotellas',desc:'Revisar condición, desgaste, fijación y señales de deterioro.'},
-{id:'D03',name:'Guías y elementos de transporte',desc:'Verificar desgaste, fijación, alineación y condición.'},
-{id:'D04',name:'Sensores y elementos eléctricos',desc:'Verificar limpieza, fijación, cableado y condición.'},
-{id:'D05',name:'Neumática',desc:'Verificar conexiones, fugas y condición de actuadores/válvulas.'}];
-const WEEKLY=[
-{id:'S01',name:'Transmisiones y componentes mecánicos',desc:'Revisión detallada de desgaste, fijación y condición.'},
-{id:'S02',name:'Elementos eléctricos',desc:'Revisión de conexiones, sensores, motores y componentes.'},
-{id:'S03',name:'Elementos neumáticos',desc:'Revisión detallada de conexiones, actuadores y válvulas.'},
-{id:'S04',name:'Estructura y componentes de encajonado',desc:'Verificar desgaste, alineación y fijaciones.'},
-{id:'S05',name:'Puntos de inspección complementarios',desc:'Registrar cualquier condición encontrada durante la inspección.'}];
-
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-function build(id,items,source){
- const el=document.getElementById(id); if(!el)return;
- el.innerHTML=items.map(p=>`<div class="row n3-point">
- <div><div class="num">${p.id}</div><div class="name">${esc(p.name)}</div><div class="desc">${esc(p.desc)}</div></div>
- <div class="actions">
- <button class="btn check" onclick="n3Normal(this,'${source}','${p.id}')">✓</button>
- <button class="btn" onclick="n3Finding('${source}','${p.id}')">Registrar hallazgo</button>
- </div></div>`).join('');
-}
-window.n3Normal=async function(btn,source,point){
- btn.classList.add('done');btn.textContent='✓ Registrado';
- await n3Persist(source,point,{condition:'normal',maintenance_required:false});
-};
-window.n3Finding=function(source,point){
- const old=document.getElementById('n3FindingModal');if(old)old.remove();
- const m=document.createElement('div');m.id='n3FindingModal';m.className='pressModal';
- m.innerHTML=`<div class="pressModalBox"><div class="pressModalHead"><h3>Registrar hallazgo · ${point}</h3><button class="pressClose" onclick="this.closest('.pressModal').remove()">×</button></div>
- <div class="pressForm"><label>Condición / falla<input id="n3reason"></label>
- <label>Severidad<select id="n3severity"><option value="low">Baja</option><option value="medium">Media</option><option value="high">Alta</option></select></label>
- <label class="full">Observación<textarea id="n3obs"></textarea></label>
- <label class="full">Acción / seguimiento<textarea id="n3action"></textarea></label></div>
- <div class="pressModalActions"><button class="btn" onclick="this.closest('.pressModal').remove()">Cancelar</button><button class="btn primary" onclick="n3SaveFinding('${source}','${point}')">Guardar hallazgo</button></div></div>`;
- document.body.appendChild(m);
-};
-window.n3SaveFinding=async function(source,point){
- await n3Persist(source,point,{condition:'finding',finding_reason:document.getElementById('n3reason').value,severity:document.getElementById('n3severity').value,observation:document.getElementById('n3obs').value,action:document.getElementById('n3action').value,maintenance_required:true});
- document.getElementById('n3FindingModal')?.remove();
-};
-async function n3Persist(source,point,extra){
- const prefix=source==='daily'?'n3Daily':'n3Weekly';
- const payload={source,point,...extra,inspection_date:document.getElementById(prefix+'Date')?.value||new Date().toISOString().slice(0,10),head:+(document.getElementById(prefix+'Head')?.value||1),row_no:+(document.getElementById(prefix+'Row')?.value||1),column_no:1};
- if(window.L3_SAVE_INSPECTION){try{await window.L3_SAVE_INSPECTION(payload);return;}catch(e){console.error(e);}}
- const key='l3_n3_inspections';const a=JSON.parse(localStorage.getItem(key)||'[]');a.unshift({...payload,id:Date.now()});localStorage.setItem(key,JSON.stringify(a));
-}
-function controls(prefix){
- return `<div class="n3Controls" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
- <label style="font-size:11px;color:#8798ad">Fecha<input id="${prefix}Date" type="date" value="${new Date().toISOString().slice(0,10)}"></label>
- <label style="font-size:11px;color:#8798ad">Cabezal<select id="${prefix}Head">${[1,2,3,4,5,6,7,8,9].map(n=>`<option value="${n}">Cabezal ${n}</option>`).join('')}</select></label>
- <label style="font-size:11px;color:#8798ad">Fila<select id="${prefix}Row">${Array.from({length:24},(_,i)=>`<option value="${i+1}">Fila ${i+1}</option>`).join('')}</select></label></div>`;
-}
-function init(){
- build('dailyRoutineGrid',DAILY,'daily');build('weeklyRoutineGrid',WEEKLY,'weekly');
- const d=document.getElementById('dailyRoutineGrid'),w=document.getElementById('weeklyRoutineGrid');
- if(d)d.insertAdjacentHTML('beforebegin',controls('n3Daily'));
- if(w)w.insertAdjacentHTML('beforebegin',controls('n3Weekly'));
-}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-})();
-</script>
-
 </body>
 </html>
