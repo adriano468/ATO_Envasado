@@ -96,43 +96,6 @@ footer{color:var(--muted);font-size:11px;text-align:center;padding:28px}
 </header>
 
 <main>
-<section id="analysis" class="view active">
- 
- <div class="grid" style="margin-top:14px">
-  <div class="card"><div class="label">Inspecciones</div><div class="value">24</div></div>
-  <div class="card"><div class="label">Cumplimiento diario</div><div class="value accent">96%</div></div>
-  <div class="card"><div class="label">Hallazgos activos</div><div class="value">4</div></div>
-  <div class="card"><div class="label">Repetitivos</div><div class="value">2</div></div>
- </div>
-
- <div class="section">
-  <h2>Estado por familia</h2><p>Consolidado de inspecciones N3 diarias y semanales.</p>
-  <div class="kpis">
-   <div class="card"><div class="label">Cabezal / tulipas</div><div class="value">92%</div><div class="bar"><div class="fill" style="width:92%"></div></div></div>
-   <div class="card"><div class="label">Transporte / cadenas</div><div class="value">88%</div><div class="bar"><div class="fill" style="width:88%"></div></div></div>
-   <div class="card"><div class="label">Eléctrico-neumático</div><div class="value">95%</div><div class="bar"><div class="fill" style="width:95%"></div></div></div>
-  </div>
- </div>
-
- <div class="section">
-  <h2>Tendencia de condiciones</h2><p>Evolución de condiciones detectadas por componente.</p>
-  <table><thead><tr><th>Componente / condición</th><th>Frecuencia</th><th>Último hallazgo</th><th>Tendencia</th><th>Señal</th></tr></thead>
-  <tbody>
-   <tr><td>Cadena transporte botellas</td><td>4</td><td>Semana 3</td><td>↑</td><td><span class="badge byellow">Vigilar</span></td></tr>
-   <tr><td>Tulipas</td><td>3</td><td>Semana 4</td><td>→</td><td><span class="badge bgreen">Estable</span></td></tr>
-   <tr><td>Guías plásticas</td><td>2</td><td>Semana 4</td><td>↑</td><td><span class="badge byellow">Revisar</span></td></tr>
-   <tr><td>Presión de aire</td><td>1</td><td>Semana 4</td><td>→</td><td><span class="badge bgreen">Estable</span></td></tr>
-  </tbody></table>
- </div>
-
- <div class="section">
-  <h2>Motor de decisión</h2><p>Señales generadas a partir del historial de inspecciones.</p>
-  <div class="row"><div><b>Repetición del mismo componente</b><div class="desc">Mismo punto reportado varias veces en ventanas consecutivas.</div></div><span class="badge byellow">Vigilar</span></div>
-  <div class="row"><div><b>Severidad alta/crítica</b><div class="desc">Prioriza revisión y seguimiento de la condición registrada.</div></div><span class="badge bred">Atención</span></div>
-  <div class="row"><div><b>Deterioro progresivo</b><div class="desc">La condición aumenta de frecuencia o severidad con el tiempo.</div></div><span class="badge byellow">Analizar</span></div>
- </div>
-</section>
-
 <section id="daily" class="view">
  <div class="section">
   <h2>N3 · Inspección diaria</h2>
@@ -161,54 +124,53 @@ footer{color:var(--muted);font-size:11px;text-align:center;padding:28px}
 
 
 
-<section id="analysis" class="view">
+<section id="analysis" class="view active">
 <style>
-#analysis .ana-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
-#analysis .ana-filter{background:var(--panel2,#111c28);color:var(--text,#edf3fa);border:1px solid var(--border,#2b3b4f);border-radius:8px;padding:8px 10px;font-size:12px}
-#analysis .ana-dashboard{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
-#analysis .ana-card{background:var(--panel2,#111c28);border:1px solid var(--border,#2b3b4f);border-radius:14px;padding:14px;min-width:0}
-#analysis .span3{grid-column:span 3}.span4{grid-column:span 4}.span6{grid-column:span 6}.span8{grid-column:span 8}.span12{grid-column:span 12}
-#analysis .ana-kpi b{display:block;font-size:25px;color:var(--text,#edf3fa)}#analysis .ana-kpi span{font-size:11px;color:var(--muted,#91a0b3)}
-#analysis .ana-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-#analysis .ana-title h3{margin:0;font-size:14px}
-#analysis canvas{width:100%;height:230px}
-#analysis .ana-table{width:100%;border-collapse:collapse;font-size:11px}
-#analysis .ana-table th,#analysis .ana-table td{padding:8px;border-bottom:1px solid var(--border,#2b3b4f);text-align:left}
-#analysis .ana-table th{color:var(--muted,#91a0b3)}
-#analysis .ana-risk{display:flex;justify-content:space-between;gap:8px;padding:9px;border-bottom:1px solid var(--border,#2b3b4f);font-size:11px}
-#analysis .ana-risk strong{color:var(--text,#edf3fa)}
-#analysis .ana-pill{padding:3px 6px;border-radius:6px;font-size:9px}
-#analysis .p-red{background:rgba(216,76,88,.14);color:#e05b67}.p-yellow{background:rgba(226,173,50,.14);color:#e2ad32}.p-green{background:rgba(45,182,129,.14);color:#2db681}
-#analysis .ana-insight{padding:10px 0;border-bottom:1px solid var(--border,#2b3b4f);font-size:12px;line-height:1.45}
-@media(max-width:900px){#analysis .span3,#analysis .span4,#analysis .span6,#analysis .span8{grid-column:span 6}}
-@media(max-width:600px){#analysis .span3,#analysis .span4,#analysis .span6,#analysis .span8,#analysis .span12{grid-column:span 12}}
+.bi{display:flex;flex-direction:column;gap:12px}
+.biTop{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.biTop select,.biTop input{width:auto;padding:7px 9px;font-size:12px}
+.biMuted{color:var(--muted);font-size:12px}
+.biSl{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:11px;color:var(--muted);margin-bottom:6px}
+.biChip{border:1px solid var(--border);background:var(--panel2);color:var(--text);border-radius:14px;padding:4px 10px;font-size:11px;cursor:pointer}
+.biChip.on{border-color:var(--amber);background:#3a2f10;color:var(--yellow)}
+.biKpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.biK{background:var(--panel2);border:1px solid var(--border);border-radius:12px;padding:12px}.biK b{font-size:24px;display:block}.biK span{font-size:11px;color:var(--muted)}
+.biGrid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
+.biCard{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:14px;min-width:0}.biCard h3{margin:0 0 10px;font-size:13px}
+.s4{grid-column:span 4}.s6{grid-column:span 6}.s8{grid-column:span 8}.s12{grid-column:span 12}
+@media(max-width:800px){.s4,.s6,.s8{grid-column:span 12}}
+.biBar{display:grid;grid-template-columns:minmax(80px,38%) 1fr auto;gap:8px;align-items:center;font-size:11px;padding:4px 6px;border-radius:6px;cursor:pointer}
+.biBar:hover{background:#1f2b3a}.biBar.on{outline:1px solid var(--amber)}
+.biBar span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.biBar i{height:8px;background:#0d151e;border-radius:6px;overflow:hidden}.biBar b{display:block;height:100%}
+.biBar em{font-style:normal;color:var(--muted)}
+#biHeat{overflow-x:auto}
+.biHeat{display:grid;grid-template-columns:30px repeat(24,minmax(16px,1fr));gap:2px;min-width:520px}
+.biHc{height:20px;border-radius:3px;cursor:pointer;position:relative;background:#101923}
+.biHc.pc::after{content:"";position:absolute;right:2px;top:2px;width:5px;height:5px;border-radius:50%;background:#a78bfa}
+.biHc.vx{box-shadow:inset 0 0 0 1px var(--red)}
+.biHl{font-size:10px;color:var(--muted);display:flex;align-items:center;cursor:pointer}.biHl.on{color:var(--yellow)}
+.biIns{padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;line-height:1.45}
 </style>
-
-<div class="card">
-  <div class="ana-toolbar">
-    <select id="anaSource" class="ana-filter"><option value="all">Todas las inspecciones</option><option value="daily">N3 Diario</option><option value="weekly">N3 Semanal</option></select>
-    <select id="anaPeriod" class="ana-filter"><option value="30">Últimos 30 días</option><option value="90">Últimos 90 días</option><option value="all">Todo el periodo</option></select>
-    <select id="anaHead" class="ana-filter"><option value="all">Todos los cabezales</option></select>
-    <select id="anaSeverity" class="ana-filter"><option value="all">Toda severidad</option><option value="high">Alta</option><option value="medium">Media</option><option value="low">Baja</option></select>
-    <button class="btn" onclick="anaReset()">Restablecer</button>
-  </div>
-
-  <div class="ana-dashboard">
-    <div class="ana-card ana-kpi span3"><b id="anaKpiIns">0</b><span>Inspecciones analizadas</span></div>
-    <div class="ana-card ana-kpi span3"><b id="anaKpiFind">0</b><span>Hallazgos</span></div>
-    <div class="ana-card ana-kpi span3"><b id="anaKpiRep">0</b><span>Puntos repetitivos</span></div>
-    <div class="ana-card ana-kpi span3"><b id="anaKpiPress">0</b><span>Prensabotellas en riesgo</span></div>
-
-    <div class="ana-card span8"><div class="ana-title"><h3>Evolución de hallazgos</h3><span id="anaTrendLabel" class="press-muted"></span></div><canvas id="anaTrend"></canvas></div>
-    <div class="ana-card span4"><div class="ana-title"><h3>Estado de prensabotellas</h3></div><canvas id="anaPressChart"></canvas></div>
-
-    <div class="ana-card span6"><div class="ana-title"><h3>Hallazgos por punto de inspección</h3></div><canvas id="anaPointChart"></canvas></div>
-    <div class="ana-card span6"><div class="ana-title"><h3>Distribución de severidad</h3></div><canvas id="anaSeverityChart"></canvas></div>
-
-    <div class="ana-card span12"><div class="ana-title"><h3>Vinculación de hallazgos con prensabotellas</h3><span class="press-muted">N3 Diario + N3 Semanal → posición → historial → estado</span></div><div id="anaLinkStatus" class="ana-insight"></div></div>
-<div class="ana-card span8"><div class="ana-title"><h3>Relación inspección ↔ prensabotellas</h3><span class="press-muted">Coincidencias registradas</span></div><table class="ana-table"><thead><tr><th>Prensabotella</th><th>Inspección</th><th>Condición</th><th>Último cambio</th><th>Estado</th></tr></thead><tbody id="anaPressTable"></tbody></table></div>
-    <div class="ana-card span4"><div class="ana-title"><h3>Seguimiento</h3></div><div id="anaInsights"></div></div>
-  </div>
+<div class="bi">
+ <div class="biTop">
+  <select id="biPer"><option value="30">30 días</option><option value="90" selected>90 días</option><option value="365">12 meses</option><option value="0">Todo</option></select>
+  <input type="date" id="biFrom"><input type="date" id="biTo">
+  <select id="biGran"><option value="w">Por semana</option><option value="d">Por día</option><option value="m">Por mes</option></select>
+  <button class="btn" onclick="BI.clear()">Limpiar filtros</button>
+  <span id="biCount" class="biMuted"></span>
+ </div>
+ <div id="biSlicers"></div>
+ <div id="biKpis" class="biKpis"></div>
+ <div class="biGrid">
+  <div class="biCard s8"><h3>Tendencia de registros</h3><div id="biTrend"></div></div>
+  <div class="biCard s4"><h3>Severidad</h3><div id="biSev"></div></div>
+  <div class="biCard s6"><h3>Componentes con más hallazgos</h3><div id="biPoint"></div></div>
+  <div class="biCard s6"><h3>Condiciones y motivos de cambio</h3><div id="biCond"></div></div>
+  <div class="biCard s12"><h3>Mapa de calor por cabezal y posición</h3><div id="biHeat"></div></div>
+  <div class="biCard s4"><h3>Lectura automática</h3><div id="biIns"></div></div>
+  <div class="biCard s8"><h3>Detalle de registros</h3><div id="biTbl" style="overflow:auto"></div></div>
+ </div>
 </div>
 </section>
 <section id="press" class="view">
@@ -276,6 +238,25 @@ footer{color:var(--muted);font-size:11px;text-align:center;padding:28px}
 #press .global-head-footer{display:flex;justify-content:space-between;margin-top:9px;font-size:10px;color:var(--muted,#91a0b3)}
 @media(max-width:900px){#press .press-global-map{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){#press .press-global-map{grid-template-columns:1fr}}
+
+/* Selector de prensabotella dentro del N3 */
+.n3-press-picker{background:#111a25;border:1px solid var(--border);border-radius:12px;padding:12px;margin-top:6px}
+.n3-press-heads{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin-bottom:12px}
+.n3-head-btn{font-size:10px;padding:7px 4px}
+.n3-head-btn.selected{background:var(--amber);border-color:var(--amber);color:#111}
+.n3-press-caption{font-size:11px;color:var(--muted);margin-bottom:8px}
+.n3-press-grid{display:grid;grid-template-columns:42px repeat(3,minmax(58px,1fr));gap:6px;max-width:420px;margin:auto}
+.n3-row-label{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;font-weight:700;background:#182330;border:1px solid var(--border);border-radius:8px;min-height:52px}
+.n3-col-label{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;font-weight:700;background:#182330;border:1px solid var(--border);border-radius:8px;min-height:42px}
+.n3-press-cell{min-height:52px;border:1px solid var(--border);background:#182330;color:var(--text);border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;box-shadow:inset 0 0 0 1px transparent}
+.n3-press-cell small{font-size:9px;color:var(--muted);font-weight:400}
+.n3-press-cell:hover{border-color:var(--amber);transform:translateY(-1px)}
+.n3-press-cell.vigente{box-shadow:inset 0 0 0 1px var(--green)}
+.n3-press-cell.proximo{box-shadow:inset 0 0 0 2px var(--yellow)}
+.n3-press-cell.vencido{box-shadow:inset 0 0 0 2px var(--red)}
+.n3-press-cell.selected{outline:2px solid var(--amber);outline-offset:1px;background:#263646}
+.n3-press-selected{font-size:11px;color:var(--green);margin-top:10px;font-weight:700;text-align:center}
+@media(max-width:700px){.n3-press-heads{grid-template-columns:repeat(5,1fr)}.n3-press-grid{grid-template-columns:34px repeat(3,minmax(55px,1fr));gap:5px}}
 </style>
 
 <div class="card press-overview">
@@ -404,15 +385,117 @@ function condition(btn){
  const allData=[...daily,...weekly];
  const item=allData.find(x=>x[0]===name);
  const options=item ? item[2] : ["Otro"];
+ const isPressBottle=/prensabotella|tulipas/i.test(name);
+ const pressPicker=isPressBottle ? `
+   <div class="full">
+    <label>Prensabotella / tulipa afectada
+      <div class="n3-press-picker">
+       <div class="n3-press-heads">
+        ${Array.from({length:9},(_,i)=>`<button type="button" class="btn n3-head-btn${i===0?' selected':''}" data-head="${i+1}" onclick="n3SelectPressHead(this,${i+1})">Cabezal ${i+1}</button>`).join('')}
+       </div>
+       <div class="n3-press-position-wrap">
+        <div class="n3-press-caption">Selecciona la posición · 24 por cabezal</div>
+        <div id="n3PressGrid" class="n3-press-grid">
+         <div class="n3-col-label">Fila</div><div class="n3-col-label">A</div><div class="n3-col-label">B</div><div class="n3-col-label">C</div>
+         ${Array.from({length:8},(_,ri)=>{
+           const r=8-ri;
+           return `<div class="n3-row-label">${r}</div>`+
+             ['A','B','C'].map(c=>`<button type="button" class="n3-press-cell vigente" data-row="${r}" data-col="${c}" onclick="n3SelectPressCell(this)"><b>${c}</b><small>Sin cambio</small></button>`).join('');
+         }).join('')}
+        </div>
+        <div id="n3PressSelected" class="n3-press-selected">Ningún prensabotella seleccionado</div>
+       </div>
+      </div>
+    </label>
+   </div>` : '';
  box.innerHTML=`<div class="finding">
  <div style="font-weight:700;margin-bottom:10px">${name}</div>
  <div class="formgrid">
-  <div><label>Condición<select>${options.map(o=>`<option>${o}</option>`).join('')}</select></label></div>
-  <div><label>Severidad<select><option>Baja</option><option>Media</option><option>Alta</option><option>Crítica</option></select></label></div>
-  <div><label>¿Se corrigió durante la inspección?<select><option>Sí</option><option>No</option><option>Parcialmente</option></select></label></div>
-  <div><label>Acción / seguimiento<input placeholder="Registrar acción"></label></div>
-  <div class="full"><label>Descripción del hallazgo<textarea placeholder="Describe la condición encontrada..."></textarea></label></div>
- </div></div>`;
+  <div><label>Condición<select id="n3Condition">${options.map(o=>`<option>${o}</option>`).join('')}</select></label></div>
+  <div><label>Severidad<select id="n3Severity"><option>Baja</option><option>Media</option><option>Alta</option><option>Crítica</option></select></label></div>
+  <div><label>¿Se corrigió durante la inspección?<select id="n3Corrected"><option>Sí</option><option>No</option><option>Parcialmente</option></select></label></div>
+  <div><label>Acción / seguimiento<input id="n3Action" placeholder="Registrar acción"></label></div>
+  ${pressPicker}
+  <div class="full"><label>Descripción del hallazgo<textarea class="n3-desc" id="n3Observation" placeholder="Describe la condición encontrada..."></textarea></label></div>
+ </div>
+ <div style="text-align:right;margin-top:12px"><button class="btn primary" onclick="saveN3Condition(this,'${name.replace(/'/g,"\\'")}')">Guardar hallazgo</button></div>
+ </div>`;
+ if(isPressBottle){ window.n3SelectedPress={head:1,row:null,column:null,key:null}; const pickerBox=box.querySelector('.finding'); if(pickerBox && window.n3RenderPressPicker) window.n3RenderPressPicker(pickerBox,1); }
+}
+
+window.n3SelectedPress={head:1,row:null,column:null,key:null};
+window.n3RenderPressPicker=function(box,head){
+ const cells=box.querySelectorAll('.n3-press-cell');
+ cells.forEach(btn=>{
+   const row=+btn.dataset.row, col=btn.dataset.col, key=pKey(head,row,col);
+   const p=(JSON.parse(localStorage.getItem('l3_prensabotellas')||'{}'))[key]||null;
+   const st=p ? pStatus(p) : 'vigente';
+   const lb=p ? pLabel(p) : 'Sin cambio';
+   btn.classList.remove('vigente','proximo','vencido','selected');
+   btn.classList.add(st);
+   btn.querySelector('small').textContent=lb;
+ });
+};
+window.n3SelectPressHead=function(btn,head){
+ const box=btn.closest('.finding');
+ box.querySelectorAll('.n3-head-btn').forEach(b=>b.classList.remove('selected'));
+ btn.classList.add('selected');
+ window.n3SelectedPress={head,row:null,column:null,key:null};
+ const sel=box.querySelector('#n3PressSelected');
+ if(sel)sel.textContent=`Cabezal ${head} · selecciona una posición`;
+ window.n3RenderPressPicker(box,head);
+};
+window.n3SelectPressCell=function(btn){
+ const box=btn.closest('.finding');
+ const head=+(box.querySelector('.n3-head-btn.selected')?.dataset.head||1);
+ const row=+btn.dataset.row, column=btn.dataset.col;
+ box.querySelectorAll('.n3-press-cell').forEach(b=>b.classList.remove('selected'));
+ btn.classList.add('selected');
+ const key=`C${head}-F${row}-${column}`;
+ window.n3SelectedPress={head,row,column,key};
+ const sel=box.querySelector('#n3PressSelected');
+ if(sel)sel.textContent=`Seleccionado: ${key} · Prensabotella / tulipa`;
+};
+
+async function saveN3Condition(btn,component){
+ const box=btn.closest('.conditionBox');
+ const section=btn.closest('.section');
+ const source=section && section.parentElement && section.parentElement.id==='dailyList'?'daily':'weekly';
+ const selects=box.querySelectorAll('select');
+ const action=box.querySelector('#n3Action')?.value || '';
+ const observation=box.querySelector('#n3Observation')?.value || '';
+ const condition=box.querySelector('#n3Condition')?.value || null;
+ const corrected=box.querySelector('#n3Corrected')?.value || null;
+ const press= /prensabotella|tulipas/i.test(component) ? (window.n3SelectedPress||{}) : {};
+ if(/prensabotella|tulipas/i.test(component) && (!press.head || !press.row || !press.column)){
+
+   alert('Selecciona el cabezal y el prensabotella afectado antes de guardar.');
+   return;
+ }
+ const payload={
+  source, component, point:component,
+  date:(document.querySelector(source==='daily'?'#daily input[type=date]':'#weekly input[type=date]')||{}).value || new Date().toISOString().slice(0,10),
+  shift:(document.querySelector('#daily select')||{}).value || null,
+  severity:box.querySelector('#n3Severity')?.value || 'Baja',
+  condition, corrected, reason:condition,
+  action, observation,
+  maintenance_required:(corrected!=='Sí')
+ };
+ if(press.head){
+   payload.head=press.head;
+   payload.row=press.row;
+   payload.column=press.column;
+   payload.position=`${press.row}-${press.column}`;
+   payload.prensabotella=press.key;
+ }
+ if(window.L3_SAVE_INSPECTION){
+  try{ await window.L3_SAVE_INSPECTION(payload); btn.textContent='✓ Guardado en vivo'; btn.disabled=true; return; }
+  catch(e){ console.error(e); alert('No se pudo guardar en la base central. Se conservará localmente.'); }
+ }
+ const a=JSON.parse(localStorage.getItem('l3_n3_inspections')||'[]');
+ a.unshift({...payload,id:Date.now(),created_at:new Date().toISOString()});
+ localStorage.setItem('l3_n3_inspections',JSON.stringify(a));
+ btn.textContent='✓ Guardado local';btn.disabled=true;
 }
 
 function show(id,btn){
@@ -421,11 +504,33 @@ function show(id,btn){
  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
  btn.classList.add('active');
 }
-function finish(type){
+async function finish(type){
  const list=document.getElementById(type==='daily'?'dailyList':'weeklyList');
  const checks=list.querySelectorAll('.check');
  const done=[...checks].filter(b=>b.classList.contains('done')).length;
- alert(`Inspección registrada: ${done}/${checks.length} puntos verificados.`);
+ const dateEl=document.querySelector(type==='daily'?'#daily input[type="date"]':'#weekly input[type="date"]');
+ const refEl=document.querySelector(type==='daily'?'#daily select':'#weekly select');
+ const ref=refEl&&refEl.value&&refEl.value!=='Seleccionar'?refEl.value:'';
+ if(!ref){alert(type==='daily'?'Selecciona el turno antes de finalizar la inspección.':'Selecciona la semana antes de finalizar la inspección.');return}
+ const date=(dateEl&&dateEl.value)||new Date().toISOString().slice(0,10);
+ const all=JSON.parse(localStorage.getItem('l3_n3_sessions')||'[]');
+ const i=all.findIndex(s=>s.src===type&&s.date===date&&s.ref===ref);
+ if(i>=0&&all[i].done===done&&all[i].total===checks.length&&!all[i].pending){alert(`Esta inspección ya estaba registrada con el mismo resultado: ${done}/${checks.length}.`);return}
+ const rec={src:type,date,ref,done,total:checks.length,pending:true};
+ i>=0?all[i]=rec:all.push(rec);
+ localStorage.setItem('l3_n3_sessions',JSON.stringify(all));
+ let saved=false;
+ if(window.L3_SAVE_SESSION){
+   try{ await window.L3_SAVE_SESSION({source:type,session_date:date,ref,done,total:checks.length}); saved=true; }
+   catch(e){ console.error(e); }
+ }
+ if(saved){
+   const a2=JSON.parse(localStorage.getItem('l3_n3_sessions')||'[]');
+   a2.forEach(s=>{if(s.src===type&&s.date===date&&s.ref===ref)delete s.pending});
+   localStorage.setItem('l3_n3_sessions',JSON.stringify(a2));
+ }
+ if(window.refreshAnalysis)window.refreshAnalysis();
+ alert(`Inspección ${i>=0?'actualizada':'registrada'}: ${done}/${checks.length} puntos verificados.`+(saved?'':' No hubo conexión con la base central; se enviará automáticamente al reconectar.'));
 }
 
 /* PRÉNSABOTELLAS — módulo adicional */
@@ -606,61 +711,17 @@ window.pressV2SelectAll=function(){selected.clear();for(let r=1;r<=8;r++)for(let
 window.pressV2Complete=function(){pressV2SelectAll()}
 window.pressV2Individual=function(){selected=new Set([pos]);pressV2Open('Cambio de prensabotella','individual')}
 function pressV2Open(title,type){document.getElementById('pressV2ModalTitle').textContent=title;document.getElementById('pressV2ModalBody').innerHTML=`<div class="press-muted">Seleccionados: ${[...selected].join(', ')}</div><div class="press-form"><label>Fecha de cambio<input id="v2date" type="date" value="${today()}"></label><label>Motivo<select id="v2reason"><option>Vida útil</option><option>Desgaste</option><option>Rotura</option><option>Daño</option><option>Falla funcional</option><option>Otro</option></select></label><label class="full">Observación<textarea id="v2note"></textarea></label></div><div style="text-align:right;margin-top:14px"><button class="btn" onclick="pressV2Close()">Cancelar</button> <button class="btn primary" onclick="pressV2Save('${type}')">Registrar cambio</button></div>`;document.getElementById('pressV2Modal').style.display='flex'}
-window.pressV2Save=function(type){let date=document.getElementById('v2date').value,reason=document.getElementById('v2reason').value,note=document.getElementById('v2note').value;if(!date)return alert('Selecciona la fecha.');let next=add(date,LIFE);[...selected].forEach(k=>{let p=data[k];p.last=date;p.next=next;p.history.unshift({date,reason,note,type})});log.unshift({date,type,reason,note,keys:[...selected],count:selected.size,next});localStorage.setItem('l3_prensabotellas',JSON.stringify(data));localStorage.setItem('l3_prensabotellas_log',JSON.stringify(log));selected.clear();pressV2Close();type==='individual'?pressV2Position(pos):pressV2Head(head)}
+window.pressV2Save=async function(type){let date=document.getElementById('v2date').value,reason=document.getElementById('v2reason').value,note=document.getElementById('v2note').value;if(!date)return alert('Selecciona la fecha.');let next=add(date,LIFE);const keys=[...selected];keys.forEach(k=>{let p=data[k];p.last=date;p.next=next;p.history.unshift({date,reason,note,type})});log.unshift({date,type,reason,note,keys,count:keys.length,next});localStorage.setItem('l3_prensabotellas',JSON.stringify(data));localStorage.setItem('l3_prensabotellas_log',JSON.stringify(log));
+const rowsP=keys.map(k=>{const p=data[k];return{head:p.h,row_no:p.r,column_no:p.c,installed_at:p.installed||null,last_change_at:date,next_change_at:next,status:'ok'}}),rowsC=keys.map(k=>{const p=data[k];return{head:p.h,row_no:p.r,column_no:p.c,changed_at:date,reason,change_type:type,note}});
+try{if(window.L3_SAVE_CHANGES)await window.L3_SAVE_CHANGES(rowsC);if(window.L3_SAVE_PRESS)await window.L3_SAVE_PRESS(rowsP)}catch(e){console.error(e);alert('No se pudo guardar en la base central. El cambio quedó guardado solo en este equipo.')}
+selected.clear();pressV2Close();type==='individual'?pressV2Position(pos):pressV2Head(head)}
 window.pressV2Close=function(){document.getElementById('pressV2Modal').style.display='none'}
 function history(){let e=document.getElementById('pressV2History');if(!log.length){e.innerHTML='<div class="press-muted">Aún no hay cambios registrados.</div>';return}e.innerHTML=log.slice(0,30).map(x=>`<div class="press-history-row"><b>${x.date}</b><span>${x.type}</span><span>${x.count} posición(es)</span><span>${x.reason}</span><span>${x.next}</span></div>`).join('')}
+window.pressV2Reload=function(){const on=q=>{const e=document.querySelector(q);return e&&e.style.display==='block'},m=document.getElementById('pressV2Modal');if(on('#press .press-detail')||on('#press .press-position')||(m&&m.style.display==='flex'))return;data=JSON.parse(localStorage.getItem('l3_prensabotellas')||'{}');init()};
 document.addEventListener('DOMContentLoaded',init);
 })();
 </script>
 
-<script>
-(function(){
-function aData(){return JSON.parse(localStorage.getItem('l3_prensabotellas')||'{}')}
-function aLog(){return JSON.parse(localStorage.getItem('l3_prensabotellas_log')||'[]')}
-function aDemoInspections(){
-  return JSON.parse(localStorage.getItem('l3_n3_inspections')||'[]')
-}
-function aStatus(p){if(!p.next)return'vigente';let d=Math.ceil((new Date(p.next+'T00:00:00')-new Date(new Date().toDateString()))/86400000);return d<0?'requerido':d<=14?'proximo':'vigente'}
-function aResize(c){const r=c.getBoundingClientRect(),d=window.devicePixelRatio||1;c.width=Math.max(300,r.width*d);c.height=230*d;return[c.getContext('2d'),r.width,230,d]}
-function aChart(id,labels,values){
- const c=document.getElementById(id);if(!c)return;const [x,w,h,d]=aResize(c);x.clearRect(0,0,c.width,c.height);x.scale(d,d);
- const max=Math.max(1,...values),pad=30,bw=Math.max(8,(w-pad*2)/Math.max(1,values.length)-7);
- x.font='11px sans-serif';x.fillStyle='#91a0b3';x.strokeStyle='#2b3b4f';
- x.beginPath();x.moveTo(pad,10);x.lineTo(pad,h-28);x.lineTo(w-10,h-28);x.stroke();
- values.forEach((v,i)=>{let bh=(h-55)*(v/max),xx=pad+i*(bw+7),yy=h-28-bh;x.fillStyle='#e6a82e';x.fillRect(xx,yy,bw,bh);x.fillStyle='#91a0b3';x.fillText(String(v),xx,yy-4);if(labels[i])x.fillText(labels[i],xx,h-10)});
-}
-function aLine(id,values){
- const c=document.getElementById(id);if(!c)return;const [x,w,h,d]=aResize(c);x.clearRect(0,0,c.width,c.height);x.scale(d,d);
- const max=Math.max(1,...values),min=Math.min(0,...values),pad=30;x.strokeStyle='#2b3b4f';x.beginPath();x.moveTo(pad,10);x.lineTo(pad,h-28);x.lineTo(w-10,h-28);x.stroke();
- x.strokeStyle='#e6a82e';x.lineWidth=2;x.beginPath();
- values.forEach((v,i)=>{let xx=pad+(w-pad-15)*(i/Math.max(1,values.length-1)),yy=h-28-(h-45)*(v-min)/Math.max(1,max-min);i?x.lineTo(xx,yy):x.moveTo(xx,yy)});x.stroke();
-}
-function anaRefresh(){
- const data=aData(), vals=Object.values(data), n={vigente:0,proximo:0,requerido:0}; const linkedVals=vals.filter(p=>(p.inspectionFindings||[]).length); const recurringVals=vals.filter(p=>p.reliability&&p.reliability.hasRecurringRisk);vals.forEach(p=>n[aStatus(p)]++);
- const inspections=aDemoInspections(), src=document.getElementById('anaSource').value, period=document.getElementById('anaPeriod').value;
- let rows=inspections.filter(x=>src==='all'||x.source===src);
- if(period!=='all'){let cut=Date.now()-Number(period)*86400000;rows=rows.filter(x=>!x.date||new Date(x.date).getTime()>=cut)}
- const heads=[...new Set(vals.map(p=>p.h))];document.getElementById('anaHead').innerHTML='<option value="all">Todos los cabezales</option>'+heads.map(h=>`<option value="${h}">Cabezal ${h}</option>`).join('');
- const hf=document.getElementById('anaHead').value;const sev=document.getElementById('anaSeverity').value;
- if(hf!=='all')rows=rows.filter(x=>String(x.head||'')===hf);if(sev!=='all')rows=rows.filter(x=>x.severity===sev);
- document.getElementById('anaKpiIns').textContent=rows.length;
- document.getElementById('anaKpiFind').textContent=rows.filter(x=>x.status==='hallazgo'||x.ok===false||x.condition==='No OK').length;
- const point={};const severity={Alta:0,Media:0,Baja:0};rows.forEach(x=>{let p=x.point||x.component||'Sin identificar';point[p]=(point[p]||0)+1;if(x.severity)severity[x.severity]=(severity[x.severity]||0)+1});
- const rep=Object.values(point).filter(v=>v>1).length;document.getElementById('anaKpiRep').textContent=rep+recurringVals.length;document.getElementById('anaKpiPress').textContent=n.proximo+n.requerido;
- aChart('anaPointChart',Object.keys(point).slice(0,8),Object.values(point).slice(0,8));
- aChart('anaSeverityChart',['Alta','Media','Baja'],[severity.Alta||0,severity.Media||0,severity.Baja||0]);
- aChart('anaPressChart',['Vigente','Próximo','Requerido'],[n.vigente,n.proximo,n.requerido]);
- const buckets=Array.from({length:7},()=>0);rows.forEach(x=>{if(x.date){let d=Math.floor((Date.now()-new Date(x.date).getTime())/86400000);if(d>=0&&d<49)buckets[Math.min(6,Math.floor(d/7))]++}});
- aLine('anaTrend',buckets);document.getElementById('anaTrendLabel').textContent='7 periodos · datos registrados';
- const tb=document.getElementById('anaPressTable');let matches=[];
- vals.filter(p=>aStatus(p)!=='vigente').forEach(p=>{let related=rows.filter(x=>String(x.head||'')===String(p.h)&&(x.position===`${p.r}-${p.c}`||x.prensabotella===`C${p.h}-F${p.r}-${p.c}`));matches.push([`C${p.h}-F${p.r}-${p.c}`,related.length?'Hallazgo relacionado':'Sin coincidencia',related[0]?.condition||'—',p.last||'—',aStatus(p)])});
- tb.innerHTML=matches.length?matches.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join(''):'<tr><td colspan="5" class="press-muted">No hay posiciones en riesgo con los filtros actuales.</td></tr>';
- const ins=[];if(n.requerido)ins.push(`<div class="ana-insight"><span class="ana-pill p-red">ACCIÓN</span> ${n.requerido} prensabotellas requieren cambio.</div>`);if(n.proximo)ins.push(`<div class="ana-insight"><span class="ana-pill p-yellow">SEGUIMIENTO</span> ${n.proximo} prensabotellas se aproximan a su vida útil.</div>`);if(!rows.length)ins.push('<div class="ana-insight">No hay registros de inspección compatibles con los filtros. El análisis no puede concluir tendencias de inspección todavía.</div>');if(rows.length&&!Object.keys(point).length)ins.push('<div class="ana-insight">Hay inspecciones registradas, pero falta identificar el punto/componente para analizar repetitividad.</div>');document.getElementById('anaInsights').innerHTML=ins.join('')||'<div class="ana-insight">Sin alertas adicionales.</div>';
-}
-window.anaReset=function(){document.getElementById('anaSource').value='all';document.getElementById('anaPeriod').value='30';document.getElementById('anaHead').value='all';document.getElementById('anaSeverity').value='all';anaRefresh()}
-document.addEventListener('DOMContentLoaded',function(){['anaSource','anaPeriod','anaHead','anaSeverity'].forEach(id=>document.getElementById(id)?.addEventListener('change',anaRefresh));anaRefresh();window.addEventListener('resize',anaRefresh)});
-})();
-</script>
 
 <script>
 (function(){
@@ -742,5 +803,229 @@ document.addEventListener('DOMContentLoaded',sync);
   };
 })();
 </script>
+<!-- CONFIABILIDAD L3 · datos en vivo y correlación -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(() => {
+  const SB_URL = "https://pbqyivpukhacralpdnsk.supabase.co";
+  const SB_KEY = "sb_publishable_k5tVoJuVPJO3Eg0eWnGcuQ_1i4QHATA";
+  const sb = window.supabase.createClient(SB_URL, SB_KEY);
+  window.L3_LIVE = { inspections: [], presses: [], pressChanges: [], sessions: [] };
+  const J=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+  const pk=(h,r,c)=>`C${h}-F${r}-${String(c).toUpperCase()}`;
+  const sk=s=>`${s.src}|${s.date}|${s.ref||''}`;
+
+  async function upsertSessions(rows){
+    let r=await sb.from('l3_n3_sessions').upsert(rows,{onConflict:'source,session_date,ref'});
+    if(r.error&&r.error.code==='42P10')r=await sb.from('l3_n3_sessions').insert(rows);
+    if(r.error)throw r.error;
+  }
+  async function flushSessions(pend){
+    try{
+      await upsertSessions(pend.map(s=>({source:s.src,session_date:s.date,ref:s.ref||'',done:s.done,total:s.total})));
+      const all=J('l3_n3_sessions',[]);
+      all.forEach(s=>{if(pend.some(p=>sk(p)===sk(s)&&p.done===s.done&&p.total===s.total))delete s.pending});
+      localStorage.setItem('l3_n3_sessions',JSON.stringify(all));
+    }catch(e){console.error(e)}
+  }
+
+  async function doRefresh(){
+    const [a,b,c,d] = await Promise.all([
+      sb.from("l3_inspections").select("*").order("created_at",{ascending:false}),
+      sb.from("l3_press_bottles").select("*").order("head").order("row_no").order("column_no"),
+      sb.from("l3_press_changes").select("*").order("changed_at",{ascending:false}),
+      sb.from("l3_n3_sessions").select("*").order("session_date",{ascending:false})
+    ]);
+    [a,b,c,d].forEach(x=>{ if(x.error) console.error(x.error); });
+    window.L3_LIVE.inspections=a.data||[]; window.L3_LIVE.presses=b.data||[];
+    window.L3_LIVE.pressChanges=c.data||[]; window.L3_LIVE.sessions=d.data||[];
+
+    if(!a.error){try{
+      localStorage.setItem("l3_n3_inspections",JSON.stringify(window.L3_LIVE.inspections.map(x=>{
+        const col=x.column??x.column_no??null,full=x.head!=null&&x.row!=null&&col;
+        return {...x,column:col,position:x.position||(full?`${x.row}-${String(col).toUpperCase()}`:null),pressKey:x.prensabotella||(full?pk(x.head,x.row,col):null)};
+      })));
+    }catch(e){console.error(e)}}
+
+    if(!b.error||!c.error){try{
+      const old=J('l3_prensabotellas',{}),obj={...old};
+      if(!b.error)window.L3_LIVE.presses.forEach(p=>{
+        const k=pk(p.head,p.row_no,p.column_no),o=old[k]||{};
+        const live=!o.last||!p.last_change_at||p.last_change_at>=o.last;
+        obj[k]={...o,id:p.id,h:p.head,r:p.row_no,c:String(p.column_no).toUpperCase(),installed:p.installed_at,
+          last:live?p.last_change_at:o.last,next:live?p.next_change_at:o.next,status:p.status,
+          followUpRequired:p.status==='due'||p.status==='overdue',history:o.history||[]};
+      });
+      if(!c.error)window.L3_LIVE.pressChanges.forEach(x=>{
+        const k=pk(x.head,x.row_no,x.column_no);
+        obj[k]=obj[k]||{h:x.head,r:x.row_no,c:String(x.column_no).toUpperCase(),last:null,next:null};
+        const h=obj[k].history=obj[k].history||[],y=h.find(z=>z.date===x.changed_at);
+        if(y){y.reason=y.reason||x.reason||'';y.note=y.note||x.note||''}
+        else h.push({date:x.changed_at,reason:x.reason||'',type:x.change_type||'',note:x.note||''});
+      });
+      Object.values(obj).forEach(p=>{if(p&&p.history)p.history.sort((x,y)=>String(y.date).localeCompare(String(x.date)))});
+      localStorage.setItem("l3_prensabotellas",JSON.stringify(obj));
+      if(!c.error)localStorage.setItem("l3_prensabotellas_changes",JSON.stringify(window.L3_LIVE.pressChanges));
+    }catch(e){console.error(e)}}
+
+    if(!d.error){try{
+      const m=new Map(),pend=J('l3_n3_sessions',[]).filter(s=>s.pending);
+      window.L3_LIVE.sessions.forEach(r=>{const s={src:r.source,date:r.session_date,ref:r.ref||'',done:r.done,total:r.total};m.set(sk(s),s)});
+      pend.forEach(s=>m.set(sk(s),s));
+      localStorage.setItem("l3_n3_sessions",JSON.stringify([...m.values()]));
+      if(pend.length)flushSessions(pend);
+    }catch(e){console.error(e)}}
+
+    if(window.pressV2Reload)window.pressV2Reload();
+    if(typeof window.refreshAnalysis==='function') window.refreshAnalysis();
+    if(typeof window.sincronizarInspeccionesPrensabotellas==='function') window.sincronizarInspeccionesPrensabotellas();
+    const badge=document.getElementById('liveStatus');
+    if(badge){ badge.textContent='● EN VIVO'; badge.style.color='#34d399'; }
+  }
+
+  // Recarga con espera: varios guardados seguidos hacen una sola lectura
+  let tm,waiters=[],q=Promise.resolve();
+  const refreshLive=()=>new Promise(res=>{
+    waiters.push(res);clearTimeout(tm);
+    tm=setTimeout(()=>{const w=waiters;waiters=[];q=q.then(doRefresh).catch(console.error).then(()=>w.forEach(f=>f()))},300);
+  });
+
+  window.L3_SAVE_INSPECTION = async function(payload){
+    const n={...payload};
+    if(n.head!=null&&n.row!=null&&n.column){
+      n.column=String(n.column).toUpperCase();
+      n.position=n.position||`${n.row}-${n.column}`;
+      n.prensabotella=n.prensabotella||pk(n.head,n.row,n.column);
+    }
+    const {data,error}=await sb.from('l3_inspections').insert(n).select().single();
+    if(error) throw error;
+    await refreshLive();
+    return data;
+  };
+  // Aceptan una fila o un arreglo: un cambio de cabezal completo es un solo guardado
+  window.L3_SAVE_PRESS = async function(p){
+    const {error}=await sb.from('l3_press_bottles').upsert(Array.isArray(p)?p:[p],{onConflict:'head,row_no,column_no'});
+    if(error) throw error;
+    await refreshLive();
+  };
+  window.L3_SAVE_CHANGES = async function(p){
+    const {error}=await sb.from('l3_press_changes').upsert(Array.isArray(p)?p:[p],{onConflict:'head,row_no,column_no,changed_at'});
+    if(error) throw error;
+    await refreshLive();
+  };
+  window.L3_SAVE_PRESS_CHANGE = window.L3_SAVE_CHANGES;
+  window.L3_SAVE_SESSION = async function(row){ await upsertSessions([row]); };
+
+  window.addEventListener('load',()=>{
+    const badge=document.createElement('span');
+    badge.id='liveStatus';badge.textContent='● CONECTANDO';
+    badge.style.cssText="font:10px 'JetBrains Mono',monospace;color:#e2ad32;margin-left:10px;";
+    const h=document.querySelector('header');if(h)h.appendChild(badge);
+    refreshLive();
+  });
+  const channel=sb.channel('l3-live');
+  ['l3_inspections','l3_press_bottles','l3_press_changes','l3_n3_sessions'].forEach(table=>{
+    channel.on('postgres_changes',{event:'*',schema:'public',table},refreshLive);
+  });
+  channel.subscribe();
+})();
+</script>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id),J=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}},iso=d=>d.toISOString().slice(0,10),esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+const SEV=['Baja','Media','Alta','Crítica'],SC={Baja:'#34d399',Media:'#f5c451',Alta:'#fb923c',Crítica:'#f0525c'},SRC={daily:'N3 Diario',weekly:'N3 Semanal',press:'Cambio prensabotella'},CL={daily:'#4fd1c5',weekly:'#e8a33d',press:'#a78bfa'};
+const LBL={src:'Origen',head:'Cabezal',sev:'Severidad',corr:'Corregido',shift:'Turno',key:'Posición',point:'Componente',cond:'Condición'};
+const F={};Object.keys(LBL).forEach(k=>F[k]=new Set());
+let ALL=[],P={};
+function wk(s){const d=new Date(s+'T00:00:00Z');d.setUTCDate(d.getUTCDate()-(d.getUTCDay()+6)%7);return iso(d)}
+function load(){
+ P=J('l3_prensabotellas',{});const ev=[];
+ J('l3_n3_inspections',[]).forEach(i=>{
+  if(i.source!=='daily'&&i.source!=='weekly')return;
+  const dt=String(i.date||i.created_at||'').slice(0,10);if(!dt)return;
+  const h=i.head||null,r=i.row||i.row_no||null,cc=i.column||i.column_no,c=cc?String(cc).toUpperCase():null;
+  ev.push({src:i.source,date:dt,head:h?+h:null,row:r?+r:null,key:h&&r&&c?`C${h}-F${r}-${c}`:'',point:i.point||i.component||'Sin identificar',cond:i.condition||i.reason||'Sin condición',sev:i.severity||'Baja',corr:i.corrected||'',shift:i.shift?String(i.shift):''});
+ });
+ const seen=new Set();
+ Object.values(P).forEach(p=>{
+  if(!p||!p.h)return;const k=`C${p.h}-F${p.r}-${p.c}`;
+  const add=(d,m)=>{if(d&&!seen.has(k+d)){seen.add(k+d);ev.push({src:'press',date:d,head:+p.h,row:+p.r,key:k,point:'Prensabotella',cond:m||'Motivo sin registrar',sev:'',corr:'',shift:''})}};
+  (p.history||[]).forEach(x=>add(x.date,x.reason));add(p.last,'');
+ });
+ ALL=ev;
+}
+function rows(){const a=$('biFrom').value,b=$('biTo').value;return ALL.filter(e=>(!a||e.date>=a)&&(!b||e.date<=b)&&Object.keys(F).every(k=>!F[k].size||F[k].has(String(e[k]))))}
+function bars(id,map,dim,col,n){
+ const e=Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,n||8),mx=Math.max(1,...e.map(x=>x[1]));
+ $(id).innerHTML=e.length?e.map(([k,v])=>`<div class="biBar${F[dim].has(k)?' on':''}" data-d="${dim}" data-v="${esc(k)}"><span>${esc(k)}</span><i><b style="width:${100*v/mx}%;background:${typeof col==='function'?col(k):col}"></b></i><em>${v}</em></div>`).join(''):'<div class="biMuted">Sin datos</div>';
+}
+function cnt(a,f){const m={};a.forEach(e=>{const k=f(e);if(k)m[k]=(m[k]||0)+1});return m}
+function trend(R){
+ const g=$('biGran').value,kf=e=>g==='d'?e.date:g==='m'?e.date.slice(0,7):wk(e.date),m={};
+ R.forEach(e=>(m[kf(e)]??={daily:0,weekly:0,press:0})[e.src]++);
+ const ks=Object.keys(m).sort().slice(-24);
+ if(!ks.length){$('biTrend').innerHTML='<div class="biMuted">Sin datos</div>';return}
+ const T=k=>m[k].daily+m[k].weekly+m[k].press,mx=Math.max(1,...ks.map(T)),W=600,H=170,bw=W/ks.length;
+ let s=`<svg viewBox="0 0 ${W} ${H+22}" style="width:100%">`;
+ ks.forEach((k,i)=>{let y=H;['daily','weekly','press'].forEach(t=>{const h=H*m[k][t]/mx;y-=h;s+=`<rect x="${i*bw+bw*.15}" y="${y}" width="${bw*.7}" height="${h}" fill="${CL[t]}"><title>${k} · ${SRC[t]}: ${m[k][t]}</title></rect>`});
+  if(i%Math.ceil(ks.length/10)==0)s+=`<text x="${i*bw+bw/2}" y="${H+14}" text-anchor="middle" fill="#8798ad" font-size="10">${k.slice(5)||k}</text>`});
+ $('biTrend').innerHTML=s+'</svg><div class="biSl">'+Object.keys(CL).map(t=>`<span><i style="display:inline-block;width:9px;height:9px;border-radius:2px;background:${CL[t]}"></i> ${SRC[t]}</span>`).join('')+'</div>';
+}
+function heat(R){
+ const n=cnt(R.filter(e=>e.src!=='press'&&e.key),e=>e.key),pk=cnt(R.filter(e=>e.src==='press'&&e.key),e=>e.key),td=iso(new Date());
+ let h='<div></div>';for(let r=1;r<=8;r++)h+=`<div class="biHl" style="grid-column:span 3;justify-content:center">F${r}</div>`;
+ for(let c=1;c<=9;c++){h+=`<div class="biHl${F.head.has(String(c))?' on':''}" data-d="head" data-v="${c}">C${c}</div>`;
+  for(let r=1;r<=8;r++)for(const x of 'ABC'){const k=`C${c}-F${r}-${x}`,v=n[k]||0,p=P[k];
+   h+=`<div class="biHc${pk[k]?' pc':''}${p&&p.next&&p.next<td?' vx':''}" data-d="key" data-v="${k}" title="${k} · ${v} hallazgo(s)${pk[k]?' · con cambio':''}"${v?` style="background:rgba(232,163,61,${Math.min(1,.3+.25*v)})"`:''}></div>`}}
+ $('biHeat').innerHTML=`<div class="biHeat">${h}</div><div class="biMuted" style="margin-top:8px">Ámbar: hallazgos N3 · punto violeta: cambio en el periodo · borde rojo: cambio vencido</div>`;
+}
+function insights(fd){
+ const o=[],now=Date.now(),d28=iso(new Date(now-28*864e5)),d56=iso(new Date(now-56*864e5));
+ const cur=fd.filter(e=>e.date>=d28).length,prv=fd.filter(e=>e.date>=d56&&e.date<d28).length;
+ if(cur||prv)o.push(prv?`Hallazgos de los últimos 28 días: ${cur}, contra ${prv} en los 28 previos (${cur>=prv?'+':''}${Math.round(100*(cur-prv)/prv)}%).`:`${cur} hallazgos en los últimos 28 días y ninguno en los 28 previos.`);
+ const pt={};fd.forEach(e=>(pt[e.point]??=new Set()).add(e.src));
+ const both=Object.keys(pt).filter(k=>pt[k].size>1);
+ if(both.length)o.push(`Aparecen en Diario y en Semanal: ${both.slice(0,3).join(', ')}.`);
+ const rk=Object.entries(cnt(fd,e=>e.key)).filter(x=>x[1]>1).sort((a,b)=>b[1]-a[1]).slice(0,3);
+ if(rk.length)o.push(`Posiciones con hallazgos repetidos: ${rk.map(x=>x[0]+' ('+x[1]+')').join(', ')}.`);
+ const wk_=fd.filter(e=>e.key);
+ if(wk_.length){const hit=wk_.filter(f=>ALL.some(c=>c.src==='press'&&c.key===f.key&&c.date>=f.date&&c.date<=iso(new Date(new Date(f.date).getTime()+30*864e5)))).length;o.push(`${hit} de ${wk_.length} hallazgos en prensabotellas terminaron en cambio dentro de 30 días.`)}
+ const gaps=[];Object.values(P).forEach(p=>{const d=((p&&p.history)||[]).map(x=>x.date).sort();for(let i=1;i<d.length;i++)gaps.push((new Date(d[i])-new Date(d[i-1]))/864e5)});
+ if(gaps.length)o.push(`Vida real promedio entre cambios: ${Math.round(gaps.reduce((a,b)=>a+b,0)/gaps.length)} días (vida de diseño: 90).`);
+ const open=fd.filter(e=>e.corr==='No').length;if(open)o.push(`${open} hallazgo(s) quedaron sin corregir durante la inspección.`);
+ return o.length?o:['Aún no hay datos suficientes para detectar tendencias.'];
+}
+function slicers(){
+ const O={src:[['daily','N3 Diario'],['weekly','N3 Semanal'],['press','Cambio prensabotella']],head:[1,2,3,4,5,6,7,8,9].map(h=>[String(h),'C'+h]),sev:SEV.map(s=>[s,s]),corr:['Sí','No','Parcialmente'].map(s=>[s,s]),shift:['1','2','3'].map(s=>[s,'T'+s])};
+ let h=Object.entries(O).map(([d,a])=>`<div class="biSl"><span>${LBL[d]}</span>${a.map(([v,l])=>`<button class="biChip${F[d].has(v)?' on':''}" data-d="${d}" data-v="${esc(v)}">${l}</button>`).join('')}</div>`).join('');
+ let x='';['key','point','cond'].forEach(d=>F[d].forEach(v=>x+=`<button class="biChip on" data-d="${d}" data-v="${esc(v)}">${LBL[d]}: ${esc(v)} ✕</button>`));
+ $('biSlicers').innerHTML=h+(x?`<div class="biSl">${x}</div>`:'');
+}
+function render(){
+ if(!$('biPer'))return;
+ load();const R=rows(),fd=R.filter(e=>e.src!=='press'),pc=R.filter(e=>e.src==='press'),td=iso(new Date()),a=$('biFrom').value,b=$('biTo').value;
+ const ses=Object.values(J('l3_n3_sessions',[]).reduce((m,x)=>(m[x.src+x.date+(x.ref||'')]=x,m),{})).filter(s=>(!a||s.date>=a)&&(!b||s.date<=b)&&(!F.src.size||F.src.has(s.src)));
+ const tot=ses.reduce((x,s)=>x+s.total,0),dn=ses.reduce((x,s)=>x+s.done,0);
+ const hi=fd.filter(e=>e.sev==='Alta'||e.sev==='Crítica').length,ok=fd.filter(e=>e.corr==='Sí').length;
+ const K=[[fd.length,'Hallazgos N3'],[hi,'Severidad alta o crítica'],[fd.length?Math.round(100*ok/fd.length)+'%':'—','Corregidos en sitio'],[Object.values(cnt(fd,e=>e.point)).filter(v=>v>1).length,'Componentes repetitivos'],[pc.length,'Cambios de prensabotella'],[Object.values(P).filter(p=>p&&p.next&&p.next<td).length,'Prensabotellas vencidas'],[tot?Math.round(100*dn/tot)+'%':'—','Checks verificados']];
+ $('biKpis').innerHTML=K.map(k=>`<div class="biK"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('');
+ $('biCount').textContent=`${R.length} de ${ALL.length} registros`;
+ slicers();trend(R);heat(R);
+ bars('biSev',cnt(fd,e=>e.sev),'sev',k=>SC[k]||'#8798ad',4);
+ bars('biPoint',cnt(fd,e=>e.point),'point','#e8a33d',8);
+ bars('biCond',cnt(R,e=>e.cond),'cond',k=>pc.some(e=>e.cond===k)&&!fd.some(e=>e.cond===k)?'#a78bfa':'#4fd1c5',8);
+ $('biIns').innerHTML=insights(fd).map(t=>`<div class="biIns">${t}</div>`).join('');
+ $('biTbl').innerHTML=R.length?`<table><thead><tr><th>Fecha</th><th>Origen</th><th>Posición</th><th>Componente</th><th>Condición</th><th>Sev.</th><th>Corr.</th></tr></thead><tbody>${R.slice().sort((x,y)=>y.date.localeCompare(x.date)).slice(0,40).map(e=>`<tr><td>${e.date}</td><td>${SRC[e.src]}</td><td>${e.key||'—'}</td><td>${esc(e.point)}</td><td>${esc(e.cond)}</td><td>${e.sev||'—'}</td><td>${e.corr||'—'}</td></tr>`).join('')}</tbody></table>`:'<div class="biMuted">Sin registros con estos filtros.</div>';
+}
+function per(){const n=+$('biPer').value;$('biFrom').value=n?iso(new Date(Date.now()-n*864e5)):'';$('biTo').value=''}
+window.BI={clear(){Object.values(F).forEach(s=>s.clear());$('biPer').value='90';per();render()}};
+$('analysis').addEventListener('click',e=>{const t=e.target.closest('[data-d]');if(!t)return;const s=F[t.dataset.d],v=t.dataset.v;s.has(v)?s.delete(v):s.add(v);render()});
+$('biPer').onchange=()=>{per();render()};['biFrom','biTo','biGran'].forEach(i=>$(i).onchange=render);
+const s0=window.show;window.show=function(id,b){s0(id,b);if(id==='analysis')render()};
+window.refreshAnalysis=render;per();render();
+})();
+</script>
+
 </body>
 </html>
